@@ -1616,30 +1616,30 @@ the for each interval.
 
 ## References and reading
 
-[@BraunMurdoch_2021] . A first course in statistical programming with R. 
+ @BraunMurdoch_2021 . A first course in statistical programming with R. 
 
-[@Dalg] . Introductory Statistics with R. 
-[This introductory text has a biostatistical emphasis.] 
+ @Dalg . Introductory Statistics with R. 
+ This introductory text has a biostatistical emphasis.  
 
-[@maindonald2010data] . Data Analysis and Graphics Using R –-
+ @maindonald2010data . Data Analysis and Graphics Using R –-
 An Example-Based Approach. 
 
-[@Matloff2011] . The Art of R Programming.
+ @Matloff2011 . The Art of R Programming.
 
-[@Murrell-Data] . Introduction to data technologies.
+ @Murrell-Data . Introduction to data technologies.
 
-[@Muenchen] . R for SAS and SPSS Users.
+ @Muenchen . R for SAS and SPSS Users.
 
-[@VR-MASS] .  Modern Applied Statistics with S. 
-[This assumes a fair level of statistical sophistication.
+ @VR-MASS .  Modern Applied Statistics with S. 
+ This assumes a fair level of statistical sophistication.
 Explanation is careful, but often terse.
 
-[@Wickham-RforData] .  R for Data Science.
+ @Wickham-RforData .  R for Data Science.
 
 ### References to packages {-}
 
-DAAG: [@R-DAAG]
+DAAG:  @R-DAAG
 
-lattice: [@R-lattice]
+lattice:  @R-lattice
 
-MASS: [@R-MASS]
+MASS:  @R-MASS
