@@ -1,0 +1,43 @@
+project:
+  type: book
+
+book:
+  title: "Using R for Data Analysis and Graphics"
+  author: "John Maindonald"
+  date: today
+  date-format: iso
+  chapters:
+    - index.qmd
+    - basics.qmd
+    - graphs.qmd
+    - reg.qmd
+    - GLMandA.qmd
+    - ts.qmd
+    - trees.qmd
+    - mva.qmd
+    - mlm.qmd
+    - references.qmd
+
+toc: true
+number-sections: true
+bibliography: 
+    - book.bib
+    - packages.bib
+
+format:
+  html:
+    theme: cosmo
+    fig-width: 5
+    fig-height: 5.5
+  pdf:
+    documentclass: scrreprt
+    fig-width: 4.5
+    fig-height: 5    
+knitr:
+  opts_chunk: 
+    collapse: true
+    comment: "" 
+    R.options:
+      fig_align: "center"
+editor: visual
+

@@ -1,0 +1,84 @@
+# Preface {.unnumbered}
+
+This document was designed, first appeared in 2000, to cover
+elementary aspects of R syntax and semantics, and to give a 
+sense of the broad sweep of the R language and system. This 
+2023 fourth revision should now replace, for those who find
+the document still useful, the 2008 version. The attention 
+remains primarily on elementary aspects of R syntax and 
+semantics that have not much changed in the past two decades.  
+
+The coverage of data manipulation and of graphics does not 
+much extend beyond what is available from base R packages.
+Those who want to explore the Hadley Wickham _tidyverse_ 
+R package collection, using its functions for data
+manipulation and graphics in place of the limited range of
+base R functions that get attention in this present document, 
+can find very extensive resources
+online.^[Notably, check https://www.tidyverse.org/]
+
+Examples demonstrate the use of R for a range of data 
+manipulation, graphical presentation, and statistical 
+analysis tasks.  They come, in Chapter 3 and later,
+with what is often very limited explanatory comment.
+
+Versions of R are available, at no cost, for Microsoft Windows, for Linux, for Unix, and for Macintosh OS X. It is available through the Comprehensive R Archive Network (CRAN). Standard R installations come with base and recommended packages -- most users will want to supplement these with packages that target their own specific requirements. Books that provide a more extended commentary on the methods demonstrated include Maindonald and Braun (2010).
+
+R implements a dialect of the S language that was developed at AT&T Bell Laboratories by Rick Becker, John Chambers and Allan Wilks. The citation for John Chambers' 1998 Association for Computing Machinery Software award stated that S has "forever altered how people analyze, visualize and manipulate data." The R project enlarges on the ideas and insights that generated the S language.
+
+The initial version of R was developed by Ross Ihaka and Robert Gentleman, at that time at the University of Auckland. Development of R is now overseen by a core team, widely drawn from different institutions worldwide.
+
+Source code is available for users to adapt and/or improve, or take across to other systems. Exposing code to the critical scrutiny of expert users has proved an effective way to identify bugs and other inadequacies, and to elicit ideas for enhancement. New minor releases appear four or five times a year.
+
+The R language environment is designed to facilitate the development of new scientific computational tools. The packages give access to up-to-date methodology from leading statistical and other researchers.
+
+R is a functional language. There is a language core that uses standard forms of algebraic notation, allowing the calculations such as `2+3`, or `3^11`. Beyond this, most computation is handled using functions. The action of quitting from an R session uses the function call `q()`, either directly or invoked by a click on a menu item that is provided for this purpose.
+
+It is often possible and desirable to operate on objects --- vectors, arrays, lists and so on -- as a whole. This largely avoids the need for explicit loops, leading to clearer code. @sec-loop has an example.
+
+With the very large address spaces now possible, and as a result of continuing improvements in the efficiency of R's coding and memory management, R's routines can readily process data sets that by historical standards seem large --- e.g., on a Unix machine with 2GB of memory, a regression with 500,000 cases and 100 variables is feasible. With very large datasets, the main issue is often manipulation of data, and systems that are specifically designed for such manipulation may be preferable.
+
+Data structure is, typically, an even more important issue for large data sets than for small data sets. Consider that repeated smaller analyses with subsets of the total data may give insight that is not available from a single global analysis.
+
+### The Use of these Notes {.unnumbered}
+
+The notes are designed so that users can run the examples in the script files (*ch1.R*, *ch2.R*, etc.) using the notes as commentary.
+
+Readers of these notes may find it helpful to have available for reference the document: *"An Introduction to R"*, written by W N Venables, D M Smith and the R Development Core Team, and available from <https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf>.
+
+Points to note are:
+
+> Users who want a point and click interface should investigate the R Commander (*Rcmdr* package) interface.
+>
+> While R is as reliable as any statistical software that is available, and exposed to higher standards of scrutiny than most other systems, there are traps that call for special care. Some of the model fitting routines are leading edge, with a limited tradition of experience of the limitations and pitfalls. Whatever the statistical system, and especially when there is some element of complication, check each step with care.
+
+> The R community is widely drawn, from application area specialists as well as statistical specialists. It is a community that is sensitive to the potential for misuse of statistical techniques and suspicious of what might seem mindless use. Expect scepticism of the use of models that are not susceptible to some minimal form of data-based validation.
+>
+> The skills needed for the computing are not on their own enough. Neither R nor any other statistical system will give the statistical expertise needed to use sophisticated abilities, or to know when naïve methods are inadequate. A butcher's meat-cleaving skills are unlikely to be adequate for effective animal surgery. Experimentation with the use of R is however, more than with most systems, likely to be an educational experience.
+
+Hurrah for the R development team!
+
+### Web Pages and Email Lists {.unnumbered}
+
+For a variety of official and contributed documentation, for copies of various versions of R, and for other information, go to [http://cran.r-project.org and](http://cran.r-project.org/) find the nearest CRAN (Comprehensive R Archive Network) mirror site.
+
+There is no official support for R. The r-help email list gives access to an informal support network that can be highly effective. Details of the R-help list, and of other lists that serve the R community, are available from the web site for the R project at <https://www.R-project.org/>. A search on Stack Overflow can often yield information that is very helpful.
+
+Binary installations of R are available from CRAN sites, for Windows, for MacOS, and for four different flavors of Linux. These come with all the base and recommended packages. Other packages must be installed.
+
+Installation instructions appropriate to the operating system can be found on CRAN sites. Copy down the relevant setup file, click on its icon to start installation, and follow instructions.
+
+For running the examples in this first chapter, ensure that the *DAAG* package is installed. The following command line instruction can be used:
+
+```{r, eval=F}
+install.packages("DAAG")
+```
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown','DAAG','knitr','lattice','latticeExtra','MASS',
+  'mgcv','nlme','rpart','zoo'), 'packages.bib')
+if(!file.exists("book-index.ind"))
+  system("cp '_book/work/book-index.ind' 'book-index.ind'")
+```

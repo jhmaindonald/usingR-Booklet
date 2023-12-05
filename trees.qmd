@@ -1,0 +1,100 @@
+# Tree-based models
+
+## Decision Tree models (Tree-based models)  
+Tree-based classification, as for example implemented in the
+_rpart_ (recursive partitioning) package, can be used for 
+multivariate supervised classification (discrimination) or for
+tree-based regression.  Tree-based methods are in general more
+suited to binary regression and classification than to regression
+with an ordinal or continuous dependent variable.
+
+Such “Classification and Regression Trees” (CART), may be 
+suitable for regression and classification problems when 
+there are extensive data.  An advantage of such
+methods is that they automatically handle non-linearity and
+interactions.  Output includes a “decision tree” that is
+immediately useful for prediction.  The `MASS:fgl` glass
+fragment data will be used for an example.  If high levels
+of accuracy are important and obtaining a single decision
+tree is not a priority, the ''random forests'' approach
+that will be described below is usually to be preferred.
+
+@fig-tree1 shows an initial tree, before pruning.
+```{r, echo=F}
+cap1 <- "Initial tree for predicting ``type`` for the forensic 
+glass data."
+```
+
+```{r, echo=F, fig.width=8, out.width="75%", fig.asp=1, echo=F}
+#| label: fig-tree1
+#| fig-cap: !expr paste(cap1)
+
+library(rpart)
+fgl <- MASS::fgl
+set.seed(31)    ## Use to reproduce output shown.
+# Use fgl: Forensic glass fragment data; from MASS package
+glass.tree <- rpart(type ~ RI+Na+Mg+Al+Si+K+Ca+Ba+Fe, data=fgl)
+plot(glass.tree);  text(glass.tree)
+```  
+Code is:  
+```{r, eval=F}
+#| label: fig-tree1
+```
+
+Now  check how cross-validated predictive accuracy changes
+with the number of splits.  The column `xerror` is the one
+to check.  Error values must be multiplied by the root node
+error to get an absolute error value.
+```{r}
+printcp(glass.tree, digits=3)
+```  
+The optimum number of splits, as indicated by this output
+(this may change from one run to the next) is 7.  The function
+`prune()` should be used to prune the splits back to this
+number. For this purpose, set `cp` to a value between that
+for `nsplit=7` and that for `nsplit=5`.
+```{r}
+printcp(prune(glass.tree, cp = 0.011))
+```
+To use single tree methods effectively, one needs to be familiar
+with approaches for such pruning, involving the use of 
+cross-validation to obtain error estimates.  Methods for
+reduction of tree complexity that are based on significance
+tests at each individual node (i.e. branching point) typically
+choose trees that over-predict.
+
+### The random forests approach
+
+The random forests approach, implemented in the _randomForests_
+package, involves generating trees for repeated bootstrap
+samples (by default, 500) from the data, with data that is 
+excluded from the bootstrap sample used to make, in each
+case, a prediction for that tree.  The final prediction is 
+based on a vote over all trees  This is simplest for
+classification trees.  The stopping criterion for individual
+trees is, unlike the case for single tree methods, not of
+great importance. Predictive accuracy is typically much
+better than  for single tree methods.  
+
+## Exercises
+
+1. The `MASS::Aids2` dataset contains de-identified data on the survival 
+status of patients diagnosed with AIDS before July 1 1991.  Use tree-based 
+classification (rpart()) to identify major influences on survival.  
+
+2. Compare the effectiveness of `rpart()` with that of `randomForest()`,
+for discriminating between plagiotropic and orthotropic species 
+in the data set `DAAG::leafshape`.
+
+## References and reading
+
+See the vignettes that accompany the _rpart_ package.
+
+@Liaw . Classification and Regression by randomForest. R News.
+
+@maindonald2010data . Data Analysis and Graphics Using R –-
+An Example-Based Approach. Cambridge University Press.
+
+@maindonald2023 . A Practical Guide to Data Analysis Using R.
+  An Example-Based Approach. Cambridge University Press.
+  

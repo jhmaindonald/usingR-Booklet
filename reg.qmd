@@ -1,0 +1,750 @@
+# Multiple Linear Regression
+
+## Linear model objects
+
+We begin with the straight line regression example that appeared earlier, 
+in @sec-typing. Look ahead to @fig-fig21, where a regression
+line has been added.
+
+The code for the regression calculation is:
+```{r, eval=T}
+elastic.lm <- lm(distance ~ stretch, data=DAAG::elasticband)
+```
+The object `distance ~ stretch` is a _model formula_, used to specify
+details of the model that is to be fitted.  Other model formulae will 
+appear in the course of this chapter. 
+
+```{r, echo=F}
+cap21 <- "Plot of distance versus stretch for the elastic band data, with fitted least squares line"
+```  
+
+```{r, eval=T, fig.width=3.5, fig.asp=1.1, out.width='40%'}
+#| label: fig-fig21
+#| fig-cap: !expr paste(cap21)
+
+elasticband <- DAAG::elasticband
+plot(distance ~ stretch, data=DAAG::elasticband)
+abline(elastic.lm)
+```
+
+The output from the regression is an `lm` object, which we have called `elastic.lm`.
+Now examine a summary of the regression results. Notice that the output documents 
+the model formula that was used:
+```{r, eval=T}
+summary(elastic.lm, digits=4)
+```
+
+An `lm` object is a list of named elements. Names of `elastic.lm` are:
+```{r, eval=T}
+names(elastic.lm)
+```  
+
+A number of functions are available for extracting information 
+that might be required from the list. This is or most purposes
+preferable to extracting elements from the list directly. 
+Examples are:  
+```{r, eval=T}
+coef(elastic.lm)
+```  
+The function most often used to inspect regression output is 
+`summary()`. It extracts the information that users
+are most likely to want. In section 5.1, we had  
+```{r, eval=F}
+summary(elastic.lm)
+```
+There is a plot method for _lm_ objects that gives the diagnostic 
+information shown in @fig-fig22.  
+```{r, echo=F}
+cap22 <- "Diagnostic plot of lm object, obtained by ``plot(elastic.lm)``."
+```  
+
+```{r, fig.asp=0.28, echo=F, fig.width=8, out.width='100%'}
+#| label: fig-fig22
+#| fig-cap: !expr paste(cap22)
+
+opar <- par(mar=c(4.6,3.6,2.1,2.1), mgp=c(2,.5,0), mfrow=c(1,4)) 
+plot(elastic.lm)
+par(opar)
+```  
+
+To get @fig-fig22, type:
+```{r, eval=F}
+#| label: fig-fig22
+```  
+
+By default the first, second and fourth plot use the row names 
+to identify the three most extreme residuals. [If explicit row 
+names are not given for the data frame, then the row numbers are used.]
+
+## Model Formulae, and the `X` Matrix
+The model formula for the elastic band example was distance ~ stretch . 
+The model formula is a recipe for setting up the calculations. All the 
+calculations described in this chapter involve the use of an model 
+matrix or `X` matrix, and a vector `y` of values of the dependent 
+variable. For some of the examples we discuss later, it helps to know 
+what the `X` matrix looks like. Details for the elastic band example follow.
+The `X` matrix, with the `y`-vector alongside, is:  
+```{r, eval=T}
+cbind(model.matrix(elastic.lm), distance=elasticband$distance)
+```
+The model matrix relates to the part of the model that appears to 
+the right of the equals sign. The straight line model is
+$y = a + b x + \mbox{residual}$, which we write as
+$$ y = a \times 1 + b \times x + \mbox{residual}$$
+The following are the fitted values and residuals that we get with the 
+estimates of `a` (= -63.6) and `b` ( = 4.55) from the least squares regression  
+
+
+1  | Stretch (mm) | (Fitted) | (Observed)	| (Residual)
+-- | ------------- | -------- | ---------- | ----------  
+ $-63.6 \times$ | $4.55  \times$	| $-63.6 + 4.55 \times \mbox{Stretch}$	| $\mbox{Distance (mm)}$	| $\mbox{Observed – Fitted}$  
+ 1 |   46 |  $-63.6 + 4.55 \times 46 = 145.7$ |  148 | 148-145.7 =  2.3  
+ 1 |   54 |  $-63.6 + 4.55 \times 54 = 182.1$ |  182 | 182-182.1 = -0.1  
+ 1 |   48 |  $-63.6 + 4.55 \times 48 = 154.8$ |  173 | 173-154.8 = 18.2  
+ 1 |   50 |  $-63.6 + 4.55 \times 50 = 163.9$ |  166 | 166-163.9 =  2.1  
+…  | …	  | …                                | …    | …  
+
+The symbol $\hat{y}$ [pronounced y-hat] is commonly used fot fitted values 
+of the variable $y$.  
+
+We might alternatively fit the simpler (no intercept) model. For this we have
+$$
+y = x \times b + e
+$$
+where $e$ is a random variable with mean 0.  The `X` matrix then consists 
+of a single column, holding the values of `x`.
+
+### Model formulae more generally
+
+Model formulae take forms such as:
+```
+y ~ x+z             # Fit y as a linear combination of x and z
+y~x + fac + fac:x 
+  # If fac is a factor and x is a variable, fac:x allows 
+  # a different slope for each different level of fac.
+```
+Model formulae are widely used to set up most of the model calculations in R.  
+Notice the similarity between model formulae and the formulae that can be used 
+for specifying plots.  Thus, recall the graph formula for a `coplot` that 
+gives a plot of `y` against `x` for each different combination of levels of 
+`fac1` (across the page) and `fac2` (up the page) is:  
+```
+y ~ x | fac1+fac2
+```
+
+### *Manipulating Model Formulae
+Model formulae can be assigned, e.g.  
+```
+formyxz <- formula(y~x+z)
+```   
+or
+```
+formyxz <- formula(“y~x+z”)
+```  
+The argument to `formula()` can, as just demonstrated, be a text string. 
+This makes it straightforward to paste the argument together from 
+components that are stored in text strings. For example
+```{r, eval=T}
+names(elasticband)
+```
+
+```{r, eval=T}
+nam <- names(elasticband)
+formds <- formula(paste(nam[1],"~",nam[2]))
+lm(formds, data=elasticband)
+```
+
+Note that graphics formulae can be manipulated in exactly 
+the same way as model formulae.
+
+## Multiple Linear Regression Models
+
+### The data frame Rubber
+
+The data set `MASS::Rubber` is from the accelerated testing of tyre 
+rubber. The variables are `loss` (the abrasion loss in gm/hr),  `hard` 
+(hardness in 'Shore’ units), and `tens` (tensile strength in kg/sq m).^[The 
+original source is @davies1947statistical , Table 6.1, p. 119.]
+@fig-fig23 shows a scatterplot matrix for the variables:  
+```{r, echo=F}
+cap23 <- "Scatterplot matrix for the data frame ``MASS::Rubber``"
+```  
+
+```{r, echo=F, fig.asp=1, out.width='70%', fig.width=7.2}
+#| label: fig-fig23
+#| fig-cap: !expr paste(cap23)
+
+pairs(MASS::Rubber)
+```  
+
+Code is:
+```{r,  eval=F}
+#| label: fig-fig23
+```
+
+There is a negative correlation between `loss` and `hard`.  
+We proceed to regress `loss` on `hard` and `tens`.
+```{r, eval=T}
+Rubber.lm <- lm(loss~hard+tens, data=MASS::Rubber)
+summary(Rubber.lm, digits=3)
+```
+
+In addition to the use of `plot()` with `lm` objects, note the use of 
+`termplot()`.  
+
+```{r, echo=F}
+cap24 <- "Plot, obtained with termplot(), showing the contribution of 
+each of the two terms in the model, at the mean of the contributions 
+for the other term.  A smooth curve has, in each panel, been fitted 
+through the partial residuals. There is a  clear suggestion that, at 
+the upper end of the range, the response is not linear with tensile strength."
+```
+
+```{r, out.width='80%', fig.width=7.2, fig.asp=0.55}
+#| label: fig-fig24
+#| fig-cap: !expr paste(cap24)
+
+par(mfrow=c(1,2))
+termplot(Rubber.lm, partial=TRUE, smooth=panel.smooth)
+```
+
+Figure \@ref(fig:fig24) used the following code:
+```{r, eval=F}
+#| label: fig-fig24
+```
+
+This plot raises interesting questions.
+
+### Weights of Books
+The books to which the data in the data set `DAAG::oddbooks` refer were 
+chosen to cover a wide range of weight to height ratios. The use of
+the data to fit regression models illustrates how biases that affect
+the collection of observational data can skew results.
+
+```{r, echo=F}
+cap25 <- "Scatterplot matrix for the data frame ``DAAG::oddbooks``"
+```  
+
+```{r, echo=F, fig.width=7, fig.asp=1.0, out.width='72%'}
+#| label: fig-fig25
+#| fig-cap: !expr paste(cap25)
+
+pairs(DAAG::oddbooks)
+```  
+
+Code is:
+```{r, eval=F}
+#| label: fig-fig25
+```
+
+The correlations between `thick`, `height` and `width` are so strong
+that if one tries to use more than one of them as a explanatory
+variables, the coefficients are ill-determined. They contain very
+similar information, as is evident from the scatterplot matrix.
+The regressions on height and width give plausible results, while
+the coefficient of the regression on thick is entirely an
+artefact of the way that the books were selected.  
+
+The design of the data collection really is important for the 
+interpretation of coefficients from a regression equation.  Even 
+where regression equations from observational data appear to work
+well for predictive purposes, the individual coefficients may be
+misleading.  This is more than an academic issue, as the analyses
+in Lalonde (1986) demonstrate.  They had data from experimental
+“treatment” and “control” groups, and also from two comparable
+non-experimental “controls”.  The regression estimate of the
+treatment effect, when comparison was with one of the
+non-experimental controls, was statistically significant but with
+the wrong sign!  The regression should be fitted only to that
+part of the data where values of the covariates overlap
+substantially.  Dehejia and Wahba demonstrate the use of scores
+(“propensities”) to identify subsets that are defensibly
+comparable.  The propensity is then the only covariate in the
+equation that estimates the treatment effect. It is impossible to
+be sure that any method is giving the right answer.
+
+Assuming a uniform density, the geometry suggests
+$$
+\mbox{weight} = \mbox{density} \times \mbox{thick}  \times \mbox{height}  \times \mbox{breadth}
+$$
+On a logarithmic scale, this transforms to
+$$
+\begin{aligned}
+\log(\mbox{weight}) &= \log(\mbox{density}) + \log(\mbox{thick})  + \log(\mbox{height})  + \log(\mbox{breadth})\\
+ &= \log(\mbox{density}) + \log(\mbox{volume})
+\end{aligned}
+$$
+
+The following ignores what the geometry suggests
+```{r}
+logbooks <- log(DAAG::oddbooks) # We might expect weight to be
+                                # proportional to thick * height * width
+## Regress log(weight) on log(thick) + log(height) + log(breadth)
+logbooks.lm3<-lm(weight~thick+height+breadth,data=logbooks)
+  # NB: `weight` is really `log(weight)`,
+  # and similarly for other variables
+cat(capture.output(summary(logbooks.lm3, digits=2))[-(1:8)], sep='\n')
+```
+Notice that all the coefficients are at the level of statistical error,
+but even so the overall fit ($p$=0.000257) is clearly good.
+
+Now regress on $\mbox{logVolume}$ = $\log(\mbox{volume})$
+```{r}
+## Regress log(weight) on log(thick) + log(height) + log(breadth)
+logVolume <- with(logbooks, thick+height+breadth)
+logbooks.lm <- lm(weight~logVolume, data=logbooks)
+cat(capture.output(summary(logbooks.lm, digits=2))[-(1:8)], sep='\n')
+```
+The model still does relatively well on the data used.  Note
+however that the coefficient of `logVolume` differs from the expected
+1.0 by 2.28 standard errors.
+
+Figure \@ref(fig:fig25) made it clear that all three variables
+are highly correlated.  We now try adding each one in  turn to
+the model regressed $\log(\mbox{weight})$ on $\mbox{logVolume}$.
+```{r}
+print(add1(logbooks.lm, scope=~.+thick+height+breadth, test='F'), digits=4)
+print(add1(logbooks.lm, scope=~.+thick+height+breadth, test='F'), digits=3)
+```
+The smallest value of the AIC statistic is preferred, though given
+the small degrees of freedom for the residual, not too much can be
+made of the magnitude of the reduction in AIC.  The preferred model
+(which is also the model that  gives the smallest `Pr(>F)`) is then:
+```{r}
+addBreadth.lm <- update(logbooks.lm, formula=.~.+breadth)
+cat(capture.output(summary(addBreadth.lm, digits=2))[-(1:8)], sep='\n')
+```
+
+Once account has been taken of `breadth`, `volume` does not make any
+clearly useful contribution to predicting `weight`. This is a result
+that has no, or very limited, applicability outside of the circumstances
+that generated this dataset.
+
+## Polynomial and Spline Regression
+Linear regression is linear in the explanatory terms that are supplied.
+These can include, for example polynomial terms.  Note that polynomial 
+curves of high degree are in general unsatisfactory.  Spline curves, 
+constructed by joining low order polynomial curves (typically cubics) 
+in such a way that the slope changes smoothly, are in general preferable.
+
+The data frame `DAAG::seedrates` gives, for each of a number of 
+different seeding rates, the number of barley grain per head.
+```{r, echo=F}
+cap27 <- "Number of grain per head versus seeding rate,
+for the barley seeding rate data, with fitted quadratic curve."
+```  
+
+```{r, fig.width=3.5, fig.asp=1.1, out.width="40%", echo=F}
+#| label: fig-fig27
+#| fig-cap: !expr paste(cap27)
+
+plot(grain ~ rate, data=DAAG::seedrates)   # Plot the data
+seedrates.lm2 <- lm(grain ~ rate+I(rate^2), data=DAAG::seedrates)
+with(data=DAAG::seedrates, lines(lowess(rate, fitted(seedrates.lm2))))
+```
+
+Code is:
+```{r, eval=F}
+#| label: fig-fig27
+```
+
+### Spline Terms in Linear Models
+
+The fitting of polynomial functions was a simple example of the
+use of linear models to fit terms that may be nonlinear functions
+of one or more of the variables.  Spline functions variables
+extend this idea further.  The splines considered here are
+constructed by joining together cubic curves, in such a way the
+joins are smooth.  The places where the cubics join are known as
+`knots’.  It turns out that, once the knots are fixed, and
+depending on the class of spline curves that are used, spline
+functions of a variable can be constructed as linear combinations 
+of basis functions, where each basis function is a transformation 
+of the variable.
+
+The dataset `cars`, from the _datasets+ package, gives stopping
+distance (`dist`, in ft) versus `speed` (mph), for cars in the
+1920s.
+```{r, echo=F}
+cap26 <- "Stopping distance (``dist``) versus ``speed``, for cars from the 1920s."
+```
+
+```{r, fig.width=7.5, fig.asp=0.55, out.width="80%", echo=F}
+#| label: fig-fig26
+#| fig-cap: !expr paste(cap26)
+
+par(mfrow=c(1,2))
+library(mgcv)
+cars3.gam <- gam(dist ~ s(speed, k=3, fx=T, bs="cr"), data=cars)
+  # k=3 includes 1 degree of freedom for the intercept.
+plot(cars3.gam, residuals=T, pch=1, shift=mean(predict(cars3.gam)),
+     ylab="Stopping distance")
+title(main="A: Regression spline smooth -- 3 df")
+## Fit with automatic choice of smoothing parameter
+cars.gam <- gam(dist ~ s(speed, k=10), data=cars)  # k=10 is default
+plot(cars.gam, residuals=T, pch=1, shift=mean(predict(cars.gam)),
+     shade=T)
+lines(cars$speed, fitted(cars3.gam), col='red', lty=2)
+title(main="B: Penalized spline smooth")
+legend('topleft', lty=2, col='red', legend="Regression spline fit from Panel A", bty="n")
+```
+
+Code is
+```{r, eval=F}
+#| label: fig-fig26
+```
+
+The Panel A choice of 3 degrees of freedom for a regression 
+spline smooth is ad hoc. Better than such an ad hoc smooth 
+is the penalized spline approach, which adds a penalty term 
+that reflects model complexity to the residual sum of squares 
+that is to be minimized.  The name GAM (Generalized Additive Model)
+is used to refer to both types of model.
+
+The Panel A regression spline smooth could alternatively be fitted
+as an `lm` style linear model.  Fitting using the function 
+`mgcv::gam()`, and specifying `k=3` and `fx=T` to obtain a
+regression spline fixed degrees of freedom fit, has the advantage
+that the function `plot.gam()` can then be used to obtain a
+graph that shows 2 standard error bounds.
+
+## Using Factors in R Models {#sec-lines2}
+Factors are crucial for specifying R models that include
+categorical or _factor_ variables.  Consider data from an
+experiment that compared houses with and without cavity
+insulation .  While one would not usually handle these
+calculations using an lm model, it makes a simple example to
+illustrate the choi,ce of a baseline level, and a set of
+contrasts.  Different choices, although they fit equivalent
+models, give output in which some of the numbers are different
+and must be interpreted differently.
+
+We begin by entering the data from the command line:
+```{r}
+insulation <- factor(c(rep("without", 8), rep("with", 7)))
+# 8 without, then 7 with
+    	# `with’ precedes `without’ in alphanumeric order, & is the baseline
+kWh <- c(10225, 10689, 14683, 6584, 8541, 12086, 12467, 
+	12669, 9708, 6700, 4307, 10315, 8017, 8162, 8022)
+```  
+To formulate this as a regression model, we take kWh as the dependent variable, and the factor insulation as the explanatory variable.  
+```{r}
+insulation <- factor(c(rep("without", 8), rep("with", 7)))
+# 8 without, then 7 with
+kWh <- c(10225, 10689, 14683, 6584, 8541, 12086, 12467, 
+         12669, 9708, 6700, 4307, 10315, 8017, 8162, 8022)
+insulation.lm <- lm(kWh ~ insulation)
+summary(insulation.lm, corr=F)
+```  
+
+The $p$-value is 0.022, which may be taken as weak evidence that 
+we can distinguish between the two types of houses.  The factor 
+levels are by default taken in alphabetical order, with the 
+initial level as the baseline.  Thus, `with` comes before `without`, 
+and is the baseline.  Hence:  
+
+Average for Insulated Houses = 7980  
+Estimate for uninsulated houses = 7980 + 3103 =  10993  
+Standard error of difference = 1196.
+
+It often helps to keep in mind the model matrix or X matrix.  
+Here are the X and the y that are used for the calculations.  
+Note that the first eight data values were all withouts:  
+
+7980 | 3103 | Add to get | Compare with | Residual
+---- | ---- | ---------- | ------------ | --------
+ 1	 |  1		| 7980+3103=10993	| 10225	| 10225-10993
+ 1	 |  1		| 7980+3103=10993 | 10689	| 10689-10993
+. . .|. .	. | . . .	          |	. . . |	. . . .
+ 1	 | 0    | 7980+0		      | 9708  | 9708-7980
+ 1	 | 0		| 7980+0		      | 6700	| 6700-7980  
+ 
+ Type  
+```{r}
+model.matrix(kWh ~ insulation)
+```   
+and check that it gives the above model matrix.
+
+### Other Choices of Contrasts
+There are other ways to set up the X matrix that use other 
+choices of contrasts.  One obvious alternative is to make 
+without the first factor level, so that it becomes the baseline. 
+For this, specify:  
+```{r}
+insulation <- relevel(insulation, ref="without")      
+  # Make `without’ the baseline
+```  
+Another possibility is to use what are called the `sum` contrasts.  
+With the `sum` contrasts the baseline is the mean over all factor 
+levels.  The effect for the first level is omitted; the user has 
+to calculate it as minus the sum of the remaining effects.  Here 
+is the output from use of the `sum’ contrasts :
+```{r}
+options(contrasts = c("contr.sum", "contr.poly"), digits = 2)    
+   #  Try the `sum’ contrasts
+insulation <- factor(insulation, levels=c("without", "with")) 
+insulation.lm <- lm(kWh ~ insulation)
+summary(insulation.lm, corr=F)
+```
+
+Here is the interpretation:  
+
+Average of (mean for “without”, “mean for with”) = 9442  
+Estimate for uninsulated houses (the first level) = 9442 + 1551 = 10993
+As _effects_ sum to one, the effect for the 2$^{nd}$ level (`with’) is -1551.   
+Thus the estimate for insulated houses (1$^{st}$ level) = 9442 - 1551 = 7980.
+
+The sum contrasts are sometimes called “analysis of variance” contrasts.
+It is possible to set the choice of contrasts for each factor separately, with a statement such as:
+```
+insulation <- C(insulation, contr=treatment)
+```  
+Also available are the helmert contrasts.  These are not at all intuitive 
+and rarely helpful, even though S-PLUS uses them as the default.  Novices should avoid them .
+
+## Multiple Lines – Different Regression Lines for Different Species
+The terms that appear on the right of the model formula may be
+variables or factors, or interactions between variables and
+factors, or interactions between factors.  Here we take advantage
+of this to fit different lines to different subsets of the data.
+
+In the example that follows, we have weights for a porpoise
+species (Stellena styx) and for a dolphin species (Delphinus
+delphis).   
+```{r}
+dolphins <- data.frame(
+  weight = c(35, 42, 71, 65, 63, 64, 45, 54, 59, 50, 
+42, 55, 37, 47, 40, 52), 
+  heart = c(245, 255, 525, 425, 425, 440, 
+350, 300, 350, 320, 240, 305, 220, 310, 210, 350),
+species = rep(c("styx", "delph"), c(7,9))
+)
+```
+
+```{r, echo=F}
+cap28 <- "Height weight versus body weight, with lobgarithmic scales
+on both axes. Separate lines are fitted for the two dolphin species."
+```
+
+@fig-fig28 shows a plot of the data, with separate lines fitted for
+the two species:
+```{r, out.width='40%', fig.width=4, fig.asp=1.0}
+#| label: fig-fig28
+#| fig-cap: !expr paste(cap28)
+
+library(lattice)
+xyplot(heart ~ weight, groups=species, auto.key=list(columns=2), data=dolphins,
+       par.settings=simpleTheme(pch=c(16,17)), type=c("p","r"), scales=list(log=T))
+```
+
+We take `x1` to be a variable that has the value 0 for
+Delphinus delphis, and 1 for Stellena styx.  We take `x2` to be
+body weight.  Possibilities we may want to consider are:
+
+(a) A single line:  `y = a + b x2`  
+(b) Two parallel lines:  `y = a1 + a2 x1 + b x2`    
+[For the first group  (Stellena styx; `x1` = 0) the constant term
+is `a1`, while for the second group (Delphinus delphis; `x1` = 1) 
+the constant term is `a1 + a2`.]  
+(c) Two separate lines: `y = a1 + a2 x1 + b1 x2  + b2 x1 x2`  
+[For the first group (Delphinus delphis; `x1` = 0) the constant 
+term is `a1` and the slope is `b1`.  For the second group 
+(Stellena styx; `x1` = 1) the constant term is `a1 + a2`, and the 
+slope is `b1 + b2`.]  
+
+Now compare these three models, both with the AIC statistics,
+and with AICc which adjusts for small sample size. AIC is one
+of several alternative 'information' statistics.
+```{r}
+cet.lm1 <- lm(log(heart) ~ log(weight), data = dolphins)
+cet.lm2 <- lm(log(heart) ~ factor(species) + log(weight), data = dolphins)
+cet.lm3 <- lm(log(heart) ~ factor(species) + factor(species)/log(weight), data = dolphins)
+cbind(AIC(cet.lm1, cet.lm2, cet.lm3), 
+      AICc = sapply(list(cet.lm1, cet.lm2, cet.lm3), AICcmodavg::AICc))
+```  
+The smallest value is best, in both cases.  Both statistics favour
+the parallel lines model. The AICc statistic makes a much clearer
+case against fitting separate lines.
+
+Selected rows of the model matrix are:
+```{r}
+model.matrix(cet.lm2)[c(1,2,8,16), ]
+```
+
+Now try an analysis of variance comparison.
+```{r}
+cet.lm3 <- lm(log(heart) ~ factor(species) + log(weight) + 
+    factor(species):log(weight), data=dolphins)
+anova(cet.lm1,cet.lm2,cet.lm3) 
+```
+## aov models (Analysis of Variance)
+The class of models that can be directly fitted as aov models is quite limited. 
+In essence, `aov()` provides, for data where all combinations of factor levels 
+have the same number of observations, another view of an lm model.  One can 
+however specify the error term that is to be used in testing for treatment 
+effects.  See @sec-errorAOV below.
+
+By default, R uses the treatment contrasts for factors, i.e. the first level 
+is taken as the baseline or reference level.  A useful function is `relevel()`,
+using the parameter `ref` to set the level that is wanted as the reference level.
+
+### Plant Growth Example  
+@fig-fig29 shows boxplot comparisons of plant weight.
+
+```{r, echo=F}
+cap29 <- "Boxplots of plant weight, by group"
+```  
+
+```{r, echo=T, fig.asp=0.4, fig.width=8, out.width="80%", fig.cap=cap25}
+#| label: fig-fig29
+#| fig-cap: !expr paste(cap29)
+
+opar <- par(mgp=c(2,0.5,0), mar=c(3.6,3.1,2.1,0.6))
+with(PlantGrowth, boxplot(split(weight, group), horizontal=T))
+par(opar)
+```  
+
+Now fit a model using `aov()`
+```{r}
+PlantGrowth.aov <- aov(weight~group, data=PlantGrowth)
+summary(PlantGrowth.aov)
+summary.lm(PlantGrowth.aov)   # As from `lm` model fit
+```           
+
+### Dataset `MASS::cabbages` (Run code to get output)
+
+Type `?MASS::cabbages` to get details of the data.  
+```{r, eval=F}
+help(cabbages)         # cabbages is from the MASS package
+names(cabbages)
+coplot(HeadWt~VitC|Cult+Date,data=cabbages)
+```  
+Examination of the plot suggests that cultivars differ greatly in 
+the variability in head weight.  Variation in the vitamin C levels 
+seems relatively consistent between cultivars.  
+```{r, eval=F}
+VitC.aov<-aov(VitC~Cult+Date,data=cabbages)
+summary(VitC.aov)
+```  
+
+## Shading of Kiwifruit Vines  {#sec-errorAOV}
+These data (yields in kilograms) in the data frame `DAAG::kiwishade`,
+are from an experiment where there were four treatments - no shading, 
+shading from August to December, shading from December to February, 
+and shading from February to May. Each treatment appeared once in 
+each of the three blocks.  The northernmost plots were grouped in 
+one block because they were similarly affected by shading from the sun.
+For the remaining two blocks shelter effects, in one case from
+the east and in the other case from the west, were thought more
+important.  Results are given for each of the four vines in each
+plot.  In experimental design parlance, the four vines within a
+plot constitute subplots.
+
+The `block:shade` mean square (sum of squares divided by degrees 
+of freedom) provides the error term.  (If this is not specified, 
+one still gets a correct analysis of variance breakdown.  But the 
+$F$-statistics and $p$-values will be wrong.)  
+```{r, eval+F}
+kiwishade <- DAAG::kiwishade
+kiwishade$shade <- relevel(kiwishade$shade, ref="none")
+## Make sure that the level “none” (no shade) is used as reference
+kiwishade.aov<-aov(yield~block+shade+Error(block:shade),data=kiwishade) 
+summary(kiwishade.aov)
+coef(kiwishade.aov)
+```  
+
+## Exercises
+1. The datasets `DAAG::elastic1` and `DAAG::elastic2` were both obtained 
+using the same apparatus, including the same rubber band, as the data 
+frame `DAAG::elasticband`. The variable `stretch` is, in each case,
+the amount by which an elastic band was stretched over the end of a ruler, 
+and `distance` the distance that the band traveled when released.  
+a) Using a different symbol and/or a different colour, plot the data 
+from the two data frames `elastic1` and `elastic2` on the same graph.  
+Do the two sets of results appear consistent?  
+b) For each of the data sets `elastic1` and `elastic2`, determine the 
+regression of `stretch` on `distance`.  In each case determine 
+(i) fitted values and standard errors of fitted values and 
+(ii) the R$^2$ statistic.  Compare the two sets of results.  What is 
+the key difference?  
+
+2. Enter the data frame beams, thus:
+```{r}
+beams <- data.frame(
+  strength = c(11.14, 12.74, 13.13, 11.51, 12.38, 
+               12.6, 11.13, 11.7, 11.02, 11.41), 
+  SpecificGravity = c(0.499, 0.558, 0.604, 0.441, 0.55, 
+                      0.528, 0.418, 0.48, 0.406, 0.467), 
+  moisture = c(11.1, 8.9, 8.8, 8.9, 8.8, 9.9, 10.7, 10.5, 
+               10.5, 10.7))
+```
+Regress `strength` on `SpecificGravity` and `Moisture`.  Carefully 
+examine the regression diagnostic plot, obtained by supplying the 
+name of the lm object as the first parameter to plot().  What does 
+this indicate?
+
+3. Using the data frame `cars` (in the datasets package), plot distance 
+(i.e. stopping distance) versus speed.  Fit a line to this relationship, 
+and plot the line.  Then try fitting and plotting a quadratic curve.
+Does the quadratic curve give a useful improvement to the fit?  If you 
+have studied the dynamics of particles, can you find a theory that would 
+tell you how stopping distance might change with speed?
+
+4. Using the data frame hills (in package MASS), regress time on distance and climb.  What can you learn from the diagnostic plots that you get when you plot the lm object?  Try also regressing log(time) on log(distance) and log(climb).  Which of these regression equations would you prefer?
+
+5. Use the method of @sec-lines2 to determine, formally, whether one needs different regression lines for the two data frames elastic1 and elastic2.
+
+6.In @sec-lines2, check the form of the model matrix (i) for fitting two parallel lines and (ii) for fitting two arbitrary lines, using the sum contrasts.
+
+7.	Type
+```{r, eval=F}
+hosp<-rep(c(”RNC”,”Hunter”,”Mater”),2)
+hosp
+fhosp<-factor(hosp)
+levels(fhosp)
+```
+Now repeat the steps involved in forming the factor `fhosp`, this time keeping the factor levels in the order `"RNC"`, `"Hunter"`, `"Mater"`.
+Use `contrasts(fhosp)` to form and print out the matrix of contrasts.  Do this using helmert contrasts, treatment contrasts, and sum contrasts.  Using an outcome variable
+```{r, eval=F}
+y <- c(2,5,8,10,3,9)
+```
+fit the model `lm(y~fhosp)`, repeating the fit for each of the three different choices of contrasts.  Comment on what you get.
+For which choice(s) of contrasts do the parameter estimates change when you re-order the factor levels?
+
+8. In the data set `MASS::cement`, examine the dependence of `y` (amount of heat
+produced) on `x1`, `x2`, `x3` and `x4` (which are proportions of four constituents). 
+Begin by examining the scatterplot matrix.  As the explanatory variables are proportions, do they require transformation, perhaps by taking `log(x/(100-x))`?  What alternative strategies one might use to find an effective prediction equation?
+
+9. In the dataset `pressure` (datasets), examine the dependence of `pressure` on temperature.  
+[Transformation of temperature makes sense only if one first converts to degrees Kelvin.  Consider transformation of pressure.  A logarithmic transformation is too extreme; 
+the direction of the curvature changes.  What family of transformations might one try?
+
+10. *Repeat the analysis of the kiwishade data (section 5.8.2), but replacing Error(block:shade) with block:shade.  Comment on the output that you get from summary().  To what extent is it potentially misleading?  Also do the analysis where the block:shade term is omitted altogether.  Comment on that analysis.  
+
+## References and reading
+
+@cunningham2021causal . Causal inference. Yale University Press.
+
+@Faraway . Linear Models with R. Taylor & Francis.
+
+@fox2018r . An R and S-PLUS Companion to Applied Regression. Sage Books.
+
+@maindonald2010data . Data Analysis and Graphics Using R –-
+An Example-Based Approach. Cambridge University Press.
+
+@maindonald2023 . A Practical Guide to Data Analysis Using R.
+  An Example-Based Approach. Cambridge University Press.
+
+@MainDesign . Statistical design, analysis and presentation issues. 
+
+@Muenchen . R for SAS and SPSS Users. Springer.
+
+@Tu-epi . Statistical thinking in epidemiology. CRC Press.
+
+@VR-MASS .  Modern Applied Statistics with S.  Springer, NY.  
+[This assumes a fair level of statistical sophistication.  
+Explanation is careful, but often terse. 
+
+@Wood-2017 . Generalized Additive Models. An Introduction with R.
+Chapman and Hall/CRC.
+
