@@ -85,6 +85,25 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -218,7 +237,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
   <ul class="collapse">
-  <li><a href="#the-use-of-these-notes" id="toc-the-use-of-these-notes" class="nav-link" data-scroll-target="#the-use-of-these-notes">The Use of these Notes</a></li>
+  <li><a href="#the-history-of-r" id="toc-the-history-of-r" class="nav-link" data-scroll-target="#the-history-of-r">The history of R</a></li>
+  <li><a href="#obtaining-r" id="toc-obtaining-r" class="nav-link" data-scroll-target="#obtaining-r">Obtaining R</a></li>
+  <li><a href="#a-language-and-an-environment" id="toc-a-language-and-an-environment" class="nav-link" data-scroll-target="#a-language-and-an-environment">A language and an environment</a></li>
+  <li><a href="#the-use-of-these-notes" id="toc-the-use-of-these-notes" class="nav-link" data-scroll-target="#the-use-of-these-notes">The use of these notes</a></li>
   <li><a href="#web-pages-and-email-lists" id="toc-web-pages-and-email-lists" class="nav-link" data-scroll-target="#web-pages-and-email-lists">Web Pages and Email Lists</a></li>
   </ul></li>
   </ul>
@@ -258,22 +280,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <section id="preface" class="level1 unnumbered">
 <h1 class="unnumbered">Preface</h1>
-<p>This document was designed, first appeared in 2000, to cover elementary aspects of R syntax and semantics, and to give a sense of the broad sweep of the R language and system. This 2023 fourth revision should now replace, for those who find the document still useful, the 2008 version. The attention remains primarily on elementary aspects of R syntax and semantics that have not much changed in the past two decades.</p>
-<p>The coverage of data manipulation and of graphics does not much extend beyond what is available from base R packages. Those who want to explore the Hadley Wickham <em>tidyverse</em> R package collection, using its functions for data manipulation and graphics in place of the limited range of base R functions that get attention in this present document, can find very extensive resources online.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<p>Examples demonstrate the use of R for a range of data manipulation, graphical presentation, and statistical analysis tasks. They come, in Chapter 3 and later, with what is often very limited explanatory comment.</p>
-<p>Versions of R are available, at no cost, for Microsoft Windows, for Linux, for Unix, and for Macintosh OS X. It is available through the Comprehensive R Archive Network (CRAN). Standard R installations come with base and recommended packages – most users will want to supplement these with packages that target their own specific requirements. Books that provide a more extended commentary on the methods demonstrated include Maindonald and Braun (2010).</p>
+<p>This document was designed, when it first appeared in 2000, to cover elementary aspects of the R language syntax and semantics, and to demonstrate by example a limited selection of R graphics and data analysis abilities. This 2023 fourth revision should now replace, for who find it still useful, earlier versions. Attention has been primarily on corrections and clarifications, with very limited attention to new features.</p>
+<p>Primarily, the focus is on using examples that readers can follow and work through. It demonstrates the use of R for a range of data manipulation, graphical presentation, and statistical analysis tasks. Examples in Chapters 3 and later come with what is often a minimum of explanatory comment.</p>
+<p>Those who want to explore the Hadley Wickham <em>tidyverse</em> R package collection, using its functions for data manipulation and graphics in place of the limited range of base R functions that get attention in this present document, can find very extensive resources online.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<section id="the-history-of-r" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="the-history-of-r">The history of R</h3>
 <p>R implements a dialect of the S language that was developed at AT&amp;T Bell Laboratories by Rick Becker, John Chambers and Allan Wilks. The citation for John Chambers’ 1998 Association for Computing Machinery Software award stated that S has “forever altered how people analyze, visualize and manipulate data.” The R project enlarges on the ideas and insights that generated the S language.</p>
 <p>The initial version of R was developed by Ross Ihaka and Robert Gentleman, at that time at the University of Auckland. Development of R is now overseen by a core team, widely drawn from different institutions worldwide.</p>
 <p>Source code is available for users to adapt and/or improve, or take across to other systems. Exposing code to the critical scrutiny of expert users has proved an effective way to identify bugs and other inadequacies, and to elicit ideas for enhancement. New minor releases appear four or five times a year.</p>
+</section>
+<section id="obtaining-r" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="obtaining-r">Obtaining R</h3>
+<p>Versions of R are available, at no cost, for Microsoft Windows, for Linux, for Unix, and for Macintosh OS X. It is available through the Comprehensive R Archive Network (CRAN). Standard R installations come with <em>base</em> and <em>recommended</em> packages. As the name suggests the <em>base</em> packages provide a base on which other R packages are built. Most users will want to supplement <em>base</em> and <em>recommended</em> packages with packages that target their own specific requirements.</p>
+</section>
+<section id="a-language-and-an-environment" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="a-language-and-an-environment">A language and an environment</h3>
 <p>The R language environment is designed to facilitate the development of new scientific computational tools. The packages give access to up-to-date methodology from leading statistical and other researchers.</p>
 <p>R is a functional language. There is a language core that uses standard forms of algebraic notation, allowing the calculations such as <code>2+3</code>, or <code>3^11</code>. Beyond this, most computation is handled using functions. The action of quitting from an R session uses the function call <code>q()</code>, either directly or invoked by a click on a menu item that is provided for this purpose.</p>
 <p>It is often possible and desirable to operate on objects — vectors, arrays, lists and so on – as a whole. This largely avoids the need for explicit loops, leading to clearer code. <a href="basics.html#sec-loop"><span>Section&nbsp;1.8</span></a> has an example.</p>
 <p>With the very large address spaces now possible, and as a result of continuing improvements in the efficiency of R’s coding and memory management, R’s routines can readily process data sets that by historical standards seem large — e.g., on a Unix machine with 2GB of memory, a regression with 500,000 cases and 100 variables is feasible. With very large datasets, the main issue is often manipulation of data, and systems that are specifically designed for such manipulation may be preferable.</p>
 <p>Data structure is, typically, an even more important issue for large data sets than for small data sets. Consider that repeated smaller analyses with subsets of the total data may give insight that is not available from a single global analysis.</p>
+</section>
 <section id="the-use-of-these-notes" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="the-use-of-these-notes">The Use of these Notes</h3>
+<h3 class="unnumbered anchored" data-anchor-id="the-use-of-these-notes">The use of these notes</h3>
 <p>The notes are designed so that users can run the examples in the script files (<em>ch1.R</em>, <em>ch2.R</em>, etc.) using the notes as commentary.</p>
-<p>Readers of these notes may find it helpful to have available for reference the document: <em>“An Introduction to R”</em>, written by W N Venables, D M Smith and the R Development Core Team, and available from <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf" class="uri">https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf</a>.</p>
+<p>Readers of these notes may find it helpful to have available for reference the document: <em>“An Introduction to R”</em>, written by W N Venables, D M Smith and the R Development Core Team, and available from <a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf" class="uri">https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf</a>. Books that provide a more extended commentary on the methods demonstrated include <span class="citation" data-cites="maindonald2010data">Maindonald and Braun (<a href="references.html#ref-maindonald2010data" role="doc-biblioref">2010</a>)</span> .</p>
 <p>Points to note are:</p>
 <blockquote class="blockquote">
 <p>Users who want a point and click interface should investigate the R Commander (<em>Rcmdr</em> package) interface.</p>
@@ -297,6 +328,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography" style="display: none">
+<div id="ref-maindonald2010data" class="csl-entry" role="doc-biblioentry">
+Maindonald, John, and John Braun. 2010. <em>Data Analysis and Graphics Using r: An Example-Based Approach</em>. Cambridge University Press.
+</div>
+</div>
 </section>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">

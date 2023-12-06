@@ -1,15 +1,19 @@
 # Preface {.unnumbered}
 
-This document was designed, first appeared in 2000, to cover
-elementary aspects of R syntax and semantics, and to give a 
-sense of the broad sweep of the R language and system. This 
-2023 fourth revision should now replace, for those who find
-the document still useful, the 2008 version. The attention 
-remains primarily on elementary aspects of R syntax and 
-semantics that have not much changed in the past two decades.  
+This document was designed, when it first appeared in 2000, 
+to cover elementary aspects of the R language syntax and 
+semantics, and to demonstrate by example a limited selection
+of R graphics and data analysis abilities. This 2023 fourth 
+revision should now replace, for who find it still useful, 
+earlier versions. Attention has been primarily on corrections
+and clarifications, with very limited attention to new features.
 
-The coverage of data manipulation and of graphics does not 
-much extend beyond what is available from base R packages.
+Primarily, the focus is on using examples that readers can
+follow and work through. It demonstrates the use of R for a
+range of data manipulation, graphical presentation, and
+statistical analysis tasks.  Examples in Chapters 3 and later 
+come with what is often a minimum of explanatory comment.
+
 Those who want to explore the Hadley Wickham _tidyverse_ 
 R package collection, using its functions for data
 manipulation and graphics in place of the limited range of
@@ -17,18 +21,22 @@ base R functions that get attention in this present document,
 can find very extensive resources
 online.^[Notably, check https://www.tidyverse.org/]
 
-Examples demonstrate the use of R for a range of data 
-manipulation, graphical presentation, and statistical 
-analysis tasks.  They come, in Chapter 3 and later,
-with what is often very limited explanatory comment.
-
-Versions of R are available, at no cost, for Microsoft Windows, for Linux, for Unix, and for Macintosh OS X. It is available through the Comprehensive R Archive Network (CRAN). Standard R installations come with base and recommended packages -- most users will want to supplement these with packages that target their own specific requirements. Books that provide a more extended commentary on the methods demonstrated include Maindonald and Braun (2010).
+### The history of R {-}
 
 R implements a dialect of the S language that was developed at AT&T Bell Laboratories by Rick Becker, John Chambers and Allan Wilks. The citation for John Chambers' 1998 Association for Computing Machinery Software award stated that S has "forever altered how people analyze, visualize and manipulate data." The R project enlarges on the ideas and insights that generated the S language.
 
 The initial version of R was developed by Ross Ihaka and Robert Gentleman, at that time at the University of Auckland. Development of R is now overseen by a core team, widely drawn from different institutions worldwide.
 
 Source code is available for users to adapt and/or improve, or take across to other systems. Exposing code to the critical scrutiny of expert users has proved an effective way to identify bugs and other inadequacies, and to elicit ideas for enhancement. New minor releases appear four or five times a year.
+
+### Obtaining R {-}
+Versions of R are available, at no cost, for Microsoft Windows, for Linux, for Unix, and for Macintosh OS X. It is available through the Comprehensive R Archive Network (CRAN). Standard R installations come with _base_ and _recommended_
+packages. As the name suggests the _base_ packages provide a base on which 
+other R packages are built.  Most users will want to supplement _base_ and
+_recommended_ packages with packages that target their own specific 
+requirements. 
+
+### A language and an environment {-}
 
 The R language environment is designed to facilitate the development of new scientific computational tools. The packages give access to up-to-date methodology from leading statistical and other researchers.
 
@@ -40,11 +48,12 @@ With the very large address spaces now possible, and as a result of continuing i
 
 Data structure is, typically, an even more important issue for large data sets than for small data sets. Consider that repeated smaller analyses with subsets of the total data may give insight that is not available from a single global analysis.
 
-### The Use of these Notes {.unnumbered}
+### The use of these notes {.unnumbered}
 
 The notes are designed so that users can run the examples in the script files (*ch1.R*, *ch2.R*, etc.) using the notes as commentary.
 
 Readers of these notes may find it helpful to have available for reference the document: *"An Introduction to R"*, written by W N Venables, D M Smith and the R Development Core Team, and available from <https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf>.
+Books that provide a more extended commentary on the methods demonstrated include @maindonald2010data .
 
 Points to note are:
 
