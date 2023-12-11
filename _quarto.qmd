@@ -1,4 +1,6 @@
-project: type: book
+project: 
+  type: website
+  output-dir: docs
 
 book: title: 'Using R for Data Analysis and Graphics' subtitle: "A Broad and Brief Overview" author: "John Maindonald" date: today date-format: iso chapters: - index.qmd - basics.qmd - graphs.qmd - reg.qmd - GLMandA.qmd - intro.qmd - summary.qmd - references.qmd
 

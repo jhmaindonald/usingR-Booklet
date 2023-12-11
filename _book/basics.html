@@ -1426,8 +1426,8 @@ rank(&lt;vector&gt;)         ## Returns the ranks of the successive elements.</c
 <span id="cb110-4"><a href="#cb110-4" aria-hidden="true" tabindex="-1"></a><span class="do">## Look at distribution of number of correct&nbsp;answers.</span></span>
 <span id="cb110-5"><a href="#cb110-5" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(correct)<span class="sc">/</span><span class="dv">1000</span></span>
 <span id="cb110-6"><a href="#cb110-6" aria-hidden="true" tabindex="-1"></a>correct</span>
-<span id="cb110-7"><a href="#cb110-7" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>     <span class="dv">1</span>     <span class="dv">2</span>     <span class="dv">3</span>     <span class="dv">4</span>     <span class="dv">5</span>     <span class="dv">6</span>     <span class="dv">7</span>     <span class="dv">8</span>     <span class="dv">9</span> </span>
-<span id="cb110-8"><a href="#cb110-8" aria-hidden="true" tabindex="-1"></a><span class="fl">0.026</span> <span class="fl">0.131</span> <span class="fl">0.233</span> <span class="fl">0.244</span> <span class="fl">0.184</span> <span class="fl">0.115</span> <span class="fl">0.043</span> <span class="fl">0.017</span> <span class="fl">0.006</span> <span class="fl">0.001</span> </span>
+<span id="cb110-7"><a href="#cb110-7" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>     <span class="dv">1</span>     <span class="dv">2</span>     <span class="dv">3</span>     <span class="dv">4</span>     <span class="dv">5</span>     <span class="dv">6</span>     <span class="dv">7</span>     <span class="dv">8</span> </span>
+<span id="cb110-8"><a href="#cb110-8" aria-hidden="true" tabindex="-1"></a><span class="fl">0.044</span> <span class="fl">0.118</span> <span class="fl">0.223</span> <span class="fl">0.258</span> <span class="fl">0.178</span> <span class="fl">0.116</span> <span class="fl">0.048</span> <span class="fl">0.012</span> <span class="fl">0.003</span> </span>
 <span id="cb110-9"><a href="#cb110-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Now use `dbinom()` to obtain expected numbers</span></span>
 <span id="cb110-10"><a href="#cb110-10" aria-hidden="true" tabindex="-1"></a><span class="fu">setNames</span>(<span class="fu">round</span>(<span class="fu">dbinom</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">15</span>, <span class="at">size=</span><span class="dv">15</span>, <span class="at">prob=</span><span class="fl">0.2</span>), <span class="dv">3</span>), <span class="dv">0</span><span class="sc">:</span><span class="dv">15</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">11</span>]</span>
 <span id="cb110-11"><a href="#cb110-11" aria-hidden="true" tabindex="-1"></a>    <span class="dv">0</span>     <span class="dv">1</span>     <span class="dv">2</span>     <span class="dv">3</span>     <span class="dv">4</span>     <span class="dv">5</span>     <span class="dv">6</span>     <span class="dv">7</span>     <span class="dv">8</span>     <span class="dv">9</span>    <span class="dv">10</span> </span>
@@ -1788,12 +1788,16 @@ The first element is the number of occurrences of level 1 of a factor, the secon
 <section id="references-and-reading" class="level2" data-number="1.14">
 <h2 data-number="1.14" class="anchored" data-anchor-id="references-and-reading"><span class="header-section-number">1.14</span> References and reading</h2>
 <p><span class="citation" data-cites="BraunMurdoch_2021">Braun and Murdoch (<a href="references.html#ref-BraunMurdoch_2021" role="doc-biblioref">2021</a>)</span> . A first course in statistical programming with R.</p>
-<p><span class="citation" data-cites="Dalg">Dalgaard (<a href="references.html#ref-Dalg" role="doc-biblioref">2008</a>)</span> . Introductory Statistics with R. This introductory text has a biostatistical emphasis.</p>
+<p><span class="citation" data-cites="Dalg">Dalgaard (<a href="references.html#ref-Dalg" role="doc-biblioref">2008</a>)</span> . Introductory Statistics with R.<br>
+[This introductory text has a biostatistical emphasis.]</p>
 <p><span class="citation" data-cites="maindonald2010data">J. Maindonald and Braun (<a href="references.html#ref-maindonald2010data" role="doc-biblioref">2010</a>)</span> . Data Analysis and Graphics Using R –- An Example-Based Approach.</p>
+<p><span class="citation" data-cites="maindonald2023">J. Maindonald, Braun, and Andrews (<a href="references.html#ref-maindonald2023" role="doc-biblioref">2024, forthcoming</a>)</span> . A Practical Guide to Data Analysis Using R. An Example-Based Approach. Cambridge University Press.<br>
+[Appendix A gives a brief overview of the R language and system.]</p>
 <p><span class="citation" data-cites="Matloff2011">Matloff (<a href="references.html#ref-Matloff2011" role="doc-biblioref">2011</a>)</span> . The Art of R Programming.</p>
 <p><span class="citation" data-cites="Murrell-Data">Murrell (<a href="references.html#ref-Murrell-Data" role="doc-biblioref">2009</a>)</span> . Introduction to data technologies.</p>
 <p><span class="citation" data-cites="Muenchen">Muenchen (<a href="references.html#ref-Muenchen" role="doc-biblioref">2011</a>)</span> . R for SAS and SPSS Users.</p>
-<p><span class="citation" data-cites="VR-MASS">Venables and Ripley (<a href="references.html#ref-VR-MASS" role="doc-biblioref">2002</a>)</span> . Modern Applied Statistics with S. This assumes a fair level of statistical sophistication. Explanation is careful, but often terse.</p>
+<p><span class="citation" data-cites="VR-MASS">Venables and Ripley (<a href="references.html#ref-VR-MASS" role="doc-biblioref">2002</a>)</span> . Modern Applied Statistics with S.<br>
+[This assumes a fair level of statistical sophistication. Explanation is careful, but often terse.]</p>
 <p><span class="citation" data-cites="Wickham-RforData">Wickham (<a href="references.html#ref-Wickham-RforData" role="doc-biblioref">2016</a>)</span> . R for Data Science.</p>
 <section id="references-to-packages" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="references-to-packages">References to packages</h3>
@@ -1815,11 +1819,14 @@ Maindonald, John H, and W. John Braun. 2022. <em>DAAG: Data Analysis and Graphic
 <div id="ref-maindonald2010data" class="csl-entry" role="doc-biblioentry">
 Maindonald, John, and John Braun. 2010. <em>Data Analysis and Graphics Using r: An Example-Based Approach</em>. Cambridge University Press.
 </div>
+<div id="ref-maindonald2023" class="csl-entry" role="doc-biblioentry">
+Maindonald, John, W John Braun, and Jeffrey Andrews. 2024, forthcoming. <em>A Practical Guide to Data Analysis Using r. An Example-Based Approach.</em> Cambridge University Press. <a href="https://jhmaindonald.github.io/PGRcode">https://jhmaindonald.github.io/PGRcode</a>.
+</div>
 <div id="ref-Matloff2011" class="csl-entry" role="doc-biblioentry">
 Matloff, Norman. 2011. <em>The Art of r Programming</em>. No Starch Inc.
 </div>
 <div id="ref-Muenchen" class="csl-entry" role="doc-biblioentry">
-Muenchen, R. A. 2011. <em>R for SAS and SPSS Users</em>. 2nd ed. Springer.
+Muenchen, R. A. 2011. <em>R for SAS and SPSS Users</em>. 2nd ed. Springer. <a href="http://r4stats.com/books/r4sas-spss/">http://r4stats.com/books/r4sas-spss/</a>.
 </div>
 <div id="ref-Murrell-Data" class="csl-entry" role="doc-biblioentry">
 Murrell, Paul. 2009. <em>Introduction to Data Technologies</em>. 1st ed. CRC Press.

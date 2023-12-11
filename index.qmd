@@ -52,8 +52,8 @@ Data structure is, typically, an even more important issue for large data sets t
 
 The notes are designed so that users can run the examples in the script files (*ch1.R*, *ch2.R*, etc.) using the notes as commentary.
 
-Readers of these notes may find it helpful to have available for reference the document: *"An Introduction to R"*, written by W N Venables, D M Smith and the R Development Core Team, and available from <https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf>.
-Books that provide a more extended commentary on the methods demonstrated include @maindonald2010data .
+Readers of these notes may find it helpful to have available for reference the document: *"An Introduction to R"*, written by W N Venables, D M Smith and the R Development Core Team, and available from <https://cran.r-project.org/doc/manuals/r-release/R-intro.pdf
+Books that provide a more extended commentary include @maindonald2010data .
 
 Points to note are:
 
@@ -77,7 +77,7 @@ Binary installations of R are available from CRAN sites, for Windows, for MacOS,
 
 Installation instructions appropriate to the operating system can be found on CRAN sites. Copy down the relevant setup file, click on its icon to start installation, and follow instructions.
 
-For running the examples in this first chapter, ensure that the *DAAG* package is installed. The following command line instruction can be used:
+For running the examples in the first chapter, ensure that the *DAAG* package is installed. The following command line instruction can be used:
 
 ```{r, eval=F}
 install.packages("DAAG")

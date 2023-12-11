@@ -849,7 +849,7 @@ Note that the first eight data values were all withouts:</p>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>insulation <span class="ot">&lt;-</span> <span class="fu">relevel</span>(insulation, <span class="at">ref=</span><span class="st">"without"</span>)      </span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Make `without’ the baseline</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Another possibility is to use what are called the <code>sum</code> contrasts.<br>
+<p>Another possibility is the <code>sum</code> contrasts.<br>
 With the <code>sum</code> contrasts the baseline is the mean over all factor levels. The effect for the first level is omitted; the user has to calculate it as minus the sum of the remaining effects. Here is the output from use of the `sum’ contrasts :</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">contrasts =</span> <span class="fu">c</span>(<span class="st">"contr.sum"</span>, <span class="st">"contr.poly"</span>), <span class="at">digits =</span> <span class="dv">2</span>)    </span>
@@ -1122,9 +1122,9 @@ Do the two sets of results appear consistent?<br>
 <p><span class="citation" data-cites="cunningham2021causal">Cunningham (<a href="references.html#ref-cunningham2021causal" role="doc-biblioref">2021</a>)</span> . Causal inference. Yale University Press.</p>
 <p><span class="citation" data-cites="Faraway">Faraway (<a href="references.html#ref-Faraway" role="doc-biblioref">2014</a>)</span> . Linear Models with R. Taylor &amp; Francis.</p>
 <p><span class="citation" data-cites="fox2018r">Fox and Weisberg (<a href="references.html#ref-fox2018r" role="doc-biblioref">2018</a>)</span> . An R and S-PLUS Companion to Applied Regression. Sage Books.</p>
-<p><span class="citation" data-cites="maindonald2010data">J. Maindonald and Braun (<a href="references.html#ref-maindonald2010data" role="doc-biblioref">2010</a>)</span> . Data Analysis and Graphics Using R –- An Example-Based Approach. Cambridge University Press.</p>
-<p><span class="citation" data-cites="maindonald2023">J. Maindonald, Braun, and Andrews (<a href="references.html#ref-maindonald2023" role="doc-biblioref">2024, forthcoming</a>)</span> . A Practical Guide to Data Analysis Using R. An Example-Based Approach. Cambridge University Press.</p>
-<p><span class="citation" data-cites="MainDesign">J. H. Maindonald (<a href="references.html#ref-MainDesign" role="doc-biblioref">1992</a>)</span> . Statistical design, analysis and presentation issues.</p>
+<p><span class="citation" data-cites="maindonald2010data">Maindonald and Braun (<a href="references.html#ref-maindonald2010data" role="doc-biblioref">2010</a>)</span> . Data Analysis and Graphics Using R –- An Example-Based Approach. Cambridge University Press.</p>
+<p><span class="citation" data-cites="maindonald2023">Maindonald, Braun, and Andrews (<a href="references.html#ref-maindonald2023" role="doc-biblioref">2024, forthcoming</a>)</span> . A Practical Guide to Data Analysis Using R. An Example-Based Approach. Cambridge University Press.</p>
+<p><span class="citation" data-cites="MainDesign">Maindonald (<a href="references.html#ref-MainDesign" role="doc-biblioref">1992</a>)</span> . Statistical design, analysis and presentation issues.</p>
 <p><span class="citation" data-cites="Muenchen">Muenchen (<a href="references.html#ref-Muenchen" role="doc-biblioref">2011</a>)</span> . R for SAS and SPSS Users. Springer.</p>
 <p><span class="citation" data-cites="Tu-epi">Tu and Gilthorpe (<a href="references.html#ref-Tu-epi" role="doc-biblioref">2011</a>)</span> . Statistical thinking in epidemiology. CRC Press.</p>
 <p><span class="citation" data-cites="VR-MASS">Venables and Ripley (<a href="references.html#ref-VR-MASS" role="doc-biblioref">2002</a>)</span> . Modern Applied Statistics with S. Springer, NY.<br>
@@ -1147,16 +1147,16 @@ Faraway, Julian J. 2014. <em>Linear Models with <span>R</span></em>. 2nd ed. Tay
 Fox, John, and Sanford Weisberg. 2018. <em>An <span>R</span> Companion to Applied Regression</em>. Sage publications. <a href="http://socserv.socsci.mcmaster.ca/jfox/Books/Companion">http://socserv.socsci.mcmaster.ca/jfox/Books/Companion</a>.
 </div>
 <div id="ref-MainDesign" class="csl-entry" role="doc-biblioentry">
-Maindonald, J H. 1992. <span>“Statistical Design, Analysis, and Presentation Issues.”</span> <em>New Zealand Journal of Agricultural Research</em> 35 (2): 121–41.
+Maindonald, John. 1992. <span>“Statistical Design, Analysis, and Presentation Issues.”</span> <em>New Zealand Journal of Agricultural Research</em> 35 (2): 121–41.
 </div>
 <div id="ref-maindonald2010data" class="csl-entry" role="doc-biblioentry">
 Maindonald, John, and John Braun. 2010. <em>Data Analysis and Graphics Using r: An Example-Based Approach</em>. Cambridge University Press.
 </div>
 <div id="ref-maindonald2023" class="csl-entry" role="doc-biblioentry">
-Maindonald, John, John Braun, and Jeffrey Andrews. 2024, forthcoming. <em>A Practical Guide to Data Analysis Using r. An Example-Based Approach.</em> Cambridge University Press.
+Maindonald, John, W John Braun, and Jeffrey Andrews. 2024, forthcoming. <em>A Practical Guide to Data Analysis Using r. An Example-Based Approach.</em> Cambridge University Press. <a href="https://jhmaindonald.github.io/PGRcode">https://jhmaindonald.github.io/PGRcode</a>.
 </div>
 <div id="ref-Muenchen" class="csl-entry" role="doc-biblioentry">
-Muenchen, R. A. 2011. <em>R for SAS and SPSS Users</em>. 2nd ed. Springer.
+Muenchen, R. A. 2011. <em>R for SAS and SPSS Users</em>. 2nd ed. Springer. <a href="http://r4stats.com/books/r4sas-spss/">http://r4stats.com/books/r4sas-spss/</a>.
 </div>
 <div id="ref-Tu-epi" class="csl-entry" role="doc-biblioentry">
 Tu, Y., and M. S. Gilthorpe. 2011. <em>Statistical Thinking in Epidemiology.</em> CRC Press.

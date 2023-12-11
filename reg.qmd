@@ -474,7 +474,7 @@ For this, specify:
 insulation <- relevel(insulation, ref="without")      
   # Make `without’ the baseline
 ```  
-Another possibility is to use what are called the `sum` contrasts.  
+Another possibility is the `sum` contrasts.  
 With the `sum` contrasts the baseline is the mean over all factor 
 levels.  The effect for the first level is omitted; the user has 
 to calculate it as minus the sum of the remaining effects.  Here 

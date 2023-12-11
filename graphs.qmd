@@ -437,36 +437,10 @@ The points of a normal probability plot will on average lie on a straight
 line if the distribution is Normal.  In order to calibrate the eye to 
 recognize plots that indicate non-normal variation, it is helpful to do 
 several normal probability plots for random samples of the relevant size 
-from a normal distribution.  @fig-fig12 is an example.
+from a normal distribution.  Look ahead to @fig-fig19, which uses the
+_lattice_ function `qqmath()`, with a much more effective graph than is
+readily obtained using base graphics functions.
 
-```{r, echo=F}
-cap12 <- "Normal probability plots. If data are from a normal distribution 
-then points should fall, on average, along a line. The plot in the top left 
-shows the 43 lengths of female possums. The other plots are for independent 
-normal random samples of size 43."
-```
-
-```{r, fig.width=7.5, fig.asp=0.55, echo=F, out.width='100%'}
-#| label: fig-fig12
-#| fig-cap: !expr paste(cap12)
-
-par(mfrow=c(2,4), mgp=c(1.8,0.5,0), mar=c(3.1,3.6,2.6,1.6))             # A 2 by 4 layout of plots
-y <- totlngth
-qqnorm(y, xlab="", ylab="Length", main="Possums")  
-for(i in 1:7)qqnorm(rnorm(43),xlab="", ylab="Simulated lengths",
-                     main="Simulated")
-# Before continuing, type dev.off() 
-```  
-There is one unusually small value.  Otherwise the points for the 
-female possum lengths are as close to a straight line as in many 
-of the plots for random normal data.
-Code is:
-```{r, fig12, eval=F}
-```
-
-The idea is an important one.  In order to judge whether data are normally distributed, examine a number of randomly generated samples of the same size from a normal distribution.  It is a way to train the eye. 
-By default, `rnorm()` generates random samples from a distribution with mean 0 
-and standard deviation 1.  
 
 ## Other Useful Plotting Functions
 For the functions demonstrated here, we use data on the heights of 100 female athletes.
@@ -693,6 +667,58 @@ xyplot(BC+Alberta ~ Date, data=jobs, outer=TRUE,
        scales=list(y=list(relation="free")) )
 ```
 
+### Data, compared with simulated normal data {-}
+
+#### Is the sample data consistent with random normal data? {-}
+
+```{r, echo=F}
+cap19 <- "Normal probability plots. If data are from a normal distribution 
+then points should fall, on average, along a line. The plot in the top left 
+shows the 43 lengths of female possums. The other plots are for independent 
+normal random samples of size 43."
+```
+
+```{r, fig.width=7.5, fig.asp=0.55, echo=F, out.width='100%'}
+#| label: fig-fig19
+#| fig-cap: !expr paste(cap19)
+
+simNorm <- function(x, nsim, nam="Data"){
+  av <- mean(x); s <- sd(x); n <- length(x)
+  data.frame(y=c(x, rnorm(n*nsim, mean=av, sd=s)),
+   gp=c(rep(nam, n), paste('Simulated', rep(1:7, rep(n,7)))))
+}
+fossum <- DAAG::possum
+dat <- simNorm(fossum$totlngth, nsim=7, nam="_totlngth_")
+qqmath (~y | gp, data=dat, layout=c(4,2),
+    ylab="Values of `totlngth`, compared with simulations")
+```
+ 
+There is one unusually small value.  Otherwise the points for the 
+female possum lengths are as close to a straight line as in many 
+of the plots for random normal data.
+Code is:
+```{r, eval=F}
+```
+
+The idea is an important one.  In order to judge whether data
+are normally distributed, examine a number of randomly generated 
+samples of the same size from a normal distribution.  It is a 
+way to train the eye, to give an idea of the extent to which
+departures from linearity may be explained as random variation
+The mean and standard deviation is best matched to that of the
+data that are under investigation.
+
+For comparison, for readers who are interested, here is code 
+that plots the same data using base graphics:
+```{r, eval=F}
+par(mfrow=c(2,4), mgp=c(1.8,0.5,0), mar=c(3.1,3.6,2.6,1.6))             # A 2 by 4 layout of plots
+gps <- unique(dat$gp)
+for (val in gps){
+  x <- subset(dat, gp==val)$y
+qqnorm(x, xlab="", ylab="Length", main=levs)  
+}
+```  
+
 ### Adding new layers {-}
 
 The _latticeExtra_ package provides wide-ranging abilities 
@@ -739,13 +765,13 @@ layer2 <- layer(parallel.fit <-
 
 The following `print`s the graph:
 ```{r, echo=F}
-cap19 <- "Plot of ``hc`` against ``rcc``. Basketballers are compared with
+cap20 <- "Plot of ``hc`` against ``rcc``. Basketballers are compared with
 swimmers. separately for males and females."
 ```
 
 ```{r, fig.asp=0.75}
-#| label: fig-fig19
-#| fig-cap: paste(cap19)
+#| label: fig-fig20
+#| fig-cap: paste(cap20)
 
 basic2+layer2
 ```
@@ -775,13 +801,13 @@ for a mathematical expression.  See `?plotmath`.
 
 `
 ```{r, echo=F}
-cap20 <- "Examples where one or both axis labels are mathematical 
+cap21 <- "Examples where one or both axis labels are mathematical 
 expressions,"
 ```
 
 ```{r, fig.width=7.5, fig.asp=0.55, out.width='100%', echo=F}
-#| label: fig-fig20
-#| fig-cap: !expr paste(cap20)
+#| label: fig-fig21
+#| fig-cap: !expr paste(cap21)
 
 par(mgp=c(1.8,0.5,0), mfrow=c(1,2))
 r <- 1:15
@@ -794,7 +820,7 @@ title(main=expression("B: Plot of "*log(frac(pi,1-pi))*" against "*pi))
 ```
 
 ```{r, eval=F}
-#| label: fig-fig20
+#| label: fig-fig21
 ```
 
 For _lattice_ and _ggplot2_ graphics as well as base graphics,

@@ -267,6 +267,7 @@ div.csl-indent {
   <ul class="collapse">
   <li><a href="#examples-that-present-panels-of-scatterplots-using-xyplot" id="toc-examples-that-present-panels-of-scatterplots-using-xyplot" class="nav-link" data-scroll-target="#examples-that-present-panels-of-scatterplots-using-xyplot">Examples that Present Panels of Scatterplots – Using <code>xyplot()</code></a></li>
   <li><a href="#plotting-columns-in-parallel" id="toc-plotting-columns-in-parallel" class="nav-link" data-scroll-target="#plotting-columns-in-parallel">Plotting columns in parallel</a></li>
+  <li><a href="#data-compared-with-simulated-normal-data" id="toc-data-compared-with-simulated-normal-data" class="nav-link" data-scroll-target="#data-compared-with-simulated-normal-data">Data, compared with simulated normal data</a></li>
   <li><a href="#adding-new-layers" id="toc-adding-new-layers" class="nav-link" data-scroll-target="#adding-new-layers">Adding new layers</a></li>
   </ul></li>
   <li><a href="#using-mathematical-expressions-in-plots" id="toc-using-mathematical-expressions-in-plots" class="nav-link" data-scroll-target="#using-mathematical-expressions-in-plots"><span class="toc-section-number">2.9</span>  Using mathematical expressions in plots</a></li>
@@ -612,25 +613,7 @@ For a column by column layout, use <code>mfcol</code> instead. <a href="#fig-fig
 <section id="normal-probability-plots" class="level3" data-number="2.6.3">
 <h3 data-number="2.6.3" class="anchored" data-anchor-id="normal-probability-plots"><span class="header-section-number">2.6.3</span> Normal probability plots</h3>
 <p>Type <code>qqnorm(y)</code> to obtain a normal probability plot of the elements of <code>y</code>.<br>
-The points of a normal probability plot will on average lie on a straight line if the distribution is Normal. In order to calibrate the eye to recognize plots that indicate non-normal variation, it is helpful to do several normal probability plots for random samples of the relevant size from a normal distribution. <a href="#fig-fig12">Figure&nbsp;<span>2.7</span></a> is an example.</p>
-<div class="cell">
-
-</div>
-<div class="cell" data-fig.asp="0.55">
-<div class="cell-output-display">
-<div id="fig-fig12" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="graphs_files/figure-html/fig-fig12-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2.7: Normal probability plots. If data are from a normal distribution then points should fall, on average, along a line. The plot in the top left shows the 43 lengths of female possums. The other plots are for independent normal random samples of size 43.</figcaption><p></p>
-</figure>
-</div>
-</div>
-</div>
-<p>There is one unusually small value. Otherwise the points for the female possum lengths are as close to a straight line as in many of the plots for random normal data. Code is:</p>
-<div class="cell">
-
-</div>
-<p>The idea is an important one. In order to judge whether data are normally distributed, examine a number of randomly generated samples of the same size from a normal distribution. It is a way to train the eye. By default, <code>rnorm()</code> generates random samples from a distribution with mean 0 and standard deviation 1.</p>
+The points of a normal probability plot will on average lie on a straight line if the distribution is Normal. In order to calibrate the eye to recognize plots that indicate non-normal variation, it is helpful to do several normal probability plots for random samples of the relevant size from a normal distribution. Look ahead to <a href="#fig-fig19">Figure&nbsp;<span>2.12</span></a>, which uses the <em>lattice</em> function <code>qqmath()</code>, with a much more effective graph than is readily obtained using base graphics functions.</p>
 </section>
 </section>
 <section id="other-useful-plotting-functions" class="level2" data-number="2.7">
@@ -638,7 +621,7 @@ The points of a normal probability plot will on average lie on a straight line i
 <p>For the functions demonstrated here, we use data on the heights of 100 female athletes.</p>
 <section id="scatterplot-smoothing" class="level3" data-number="2.7.1">
 <h3 data-number="2.7.1" class="anchored" data-anchor-id="scatterplot-smoothing"><span class="header-section-number">2.7.1</span> Scatterplot smoothing</h3>
-<p>The function <code>panel.smooth()</code> plots points, then adds a smooth curve through the points. As an example, consider the <code>MASS:forbes</code> data frame that has 17 observations of barometric pressure (<code>bp</code>, inches of mercury) and boiling point of water (<code>bp</code>, degrees Fahrenheit), at various locations in the Alps. <a href="#fig-fig13">Figure&nbsp;<span>2.8</span></a> plots the data, and adds a smooth curve. A dashed line has been added for comparison.</p>
+<p>The function <code>panel.smooth()</code> plots points, then adds a smooth curve through the points. As an example, consider the <code>MASS:forbes</code> data frame that has 17 observations of barometric pressure (<code>bp</code>, inches of mercury) and boiling point of water (<code>bp</code>, degrees Fahrenheit), at various locations in the Alps. <a href="#fig-fig13">Figure&nbsp;<span>2.7</span></a> plots the data, and adds a smooth curve. A dashed line has been added for comparison.</p>
 <div class="cell">
 
 </div>
@@ -647,7 +630,7 @@ The points of a normal probability plot will on average lie on a straight line i
 <div id="fig-fig13" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="graphs_files/figure-html/fig-fig13-1.png" class="img-fluid figure-img" style="width:50.0%"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2.8: Boiling point of water, versus measured barometric pressure</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2.7: Boiling point of water, versus measured barometric pressure</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -665,13 +648,13 @@ The points of a normal probability plot will on average lie on a straight line i
 <div id="fig-fig14" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="graphs_files/figure-html/fig-fig14-1.png" class="img-fluid figure-img" width="768"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2.9: Plots of brain weight (gm) against body weight (kg).<br>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2.8: Plots of brain weight (gm) against body weight (kg).<br>
 Panel A makes it clear why a logarithmic or other power transformation is needed. Panel B adds both a least squares regression line and a robust regression line.</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-<p><a href="#fig-fig14">Figure&nbsp;<span>2.9</span></a> shows plots of brain weight (gm) against body weight (kg), for 28 species of land animals. Logarithmic scales on both axes result in a meaningful plot, shown in Panel B. Two lines have been added – a least squares regression line (in black), and a robust regression line (in red).</p>
+<p><a href="#fig-fig14">Figure&nbsp;<span>2.8</span></a> shows plots of brain weight (gm) against body weight (kg), for 28 species of land animals. Logarithmic scales on both axes result in a meaningful plot, shown in Panel B. Two lines have been added – a least squares regression line (in black), and a robust regression line (in red).</p>
 <p>The robust regression line makes a more sense than the least squares line. There are a number of animals with large body weight that have a larger brain weight than the red line would suggest.</p>
 <p>Code for Panel B is:</p>
 <div class="cell">
@@ -697,7 +680,7 @@ Providing it is installed, the <em>grid</em> package will be attached automatica
 <p>The function name <code>print</code> emphasizes that the main part of the work required to produce a graph has already been done before the <code>print()</code> function is called – all that is then required is take the instructions that have been embedded in the graphics object and use them to show a graph on the screen or on the printed page. Readers who wish to pursue use of <em>ggplot2</em> and of packages built on <em>ggplot2</em> are referred to the extensive tutorial resources available on the web.</p>
 <section id="examples-that-present-panels-of-scatterplots-using-xyplot" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="examples-that-present-panels-of-scatterplots-using-xyplot">Examples that Present Panels of Scatterplots – Using <code>xyplot()</code></h3>
-<p>The basic function for creating panels of scatterplots is <code>xyplot()</code>. As an example, consider data, in the data frame <code>DAAG::tinting</code>, that are from an experiment that investigated the effects of tinting of car windows on visual recognition performance, primarily for visual recognition tasks that would be performed through side windows. Variables are <code>csoa</code> (critical stimulus onset asynchrony, i.e.&nbsp;the time in milliseconds required to recognize an alphanumeric target), <code>it</code> (inspection time, i.e., the time required for a simple discrimination task) and <code>age</code>, with ordered factors <code>tint</code> (level of tinting: <code>no</code>, <code>lo</code>, <code>hi</code>), <code>target</code> (<code>contrast</code>: <code>locon</code>, <code>hicon</code>), and <code>agegp</code> (1 = young, in the early 20s; 2 = an older participant, in the early 70s), and the factor <code>sex</code> (1 = male, 2 = female). <a href="#fig-fig16">Figure&nbsp;<span>2.10</span></a> shows the style of graph that one can get from xyplot(). The different symbols are different contrasts.</p>
+<p>The basic function for creating panels of scatterplots is <code>xyplot()</code>. As an example, consider data, in the data frame <code>DAAG::tinting</code>, that are from an experiment that investigated the effects of tinting of car windows on visual recognition performance, primarily for visual recognition tasks that would be performed through side windows. Variables are <code>csoa</code> (critical stimulus onset asynchrony, i.e.&nbsp;the time in milliseconds required to recognize an alphanumeric target), <code>it</code> (inspection time, i.e., the time required for a simple discrimination task) and <code>age</code>, with ordered factors <code>tint</code> (level of tinting: <code>no</code>, <code>lo</code>, <code>hi</code>), <code>target</code> (<code>contrast</code>: <code>locon</code>, <code>hicon</code>), and <code>agegp</code> (1 = young, in the early 20s; 2 = an older participant, in the early 70s), and the factor <code>sex</code> (1 = male, 2 = female). <a href="#fig-fig16">Figure&nbsp;<span>2.9</span></a> shows the style of graph that one can get from xyplot(). The different symbols are different contrasts.</p>
 <div class="cell">
 
 </div>
@@ -707,7 +690,7 @@ Providing it is installed, the <em>grid</em> package will be attached automatica
 <div id="fig-fig16" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="graphs_files/figure-html/fig-fig16-1.png" class="img-fluid figure-img" width="480"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2.10: cap16</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2.9: cap16</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -719,7 +702,7 @@ Providing it is installed, the <em>grid</em> package will be attached automatica
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">panel =</span> panel.superpose, </span>
 <span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">groups =</span> target, <span class="at">auto.key =</span> <span class="fu">list</span>(<span class="at">columns =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Addition of the argument <code>groups=target</code> has the result that two different colors of symbol are used to distinguish between low contrast and high contrast targets. To use different symbols, add an argument in the style of <code>par.settings=simpleTheme(pch=c(1,16))</code>. Additionally, or instead, it would make sense to use lighter and darker colors for the two levels of contrast. Code is easier to follow if one starts with the graphics object needed for <a href="#fig-fig16">Figure&nbsp;<span>2.10</span></a> and then updates it:</p>
+<p>Addition of the argument <code>groups=target</code> has the result that two different colors of symbol are used to distinguish between low contrast and high contrast targets. To use different symbols, add an argument in the style of <code>par.settings=simpleTheme(pch=c(1,16))</code>. Additionally, or instead, it would make sense to use lighter and darker colors for the two levels of contrast. Code is easier to follow if one starts with the graphics object needed for <a href="#fig-fig16">Figure&nbsp;<span>2.9</span></a> and then updates it:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>gph <span class="ot">&lt;-</span> <span class="fu">xyplot</span>(csoa <span class="sc">~</span> it <span class="sc">|</span> sex <span class="sc">*</span> agegp, <span class="at">data =</span> DAAG<span class="sc">::</span>tinting, </span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">panel =</span> panel.superpose, <span class="at">groups =</span> target)</span>
@@ -730,7 +713,7 @@ Providing it is installed, the <em>grid</em> package will be attached automatica
 <span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">par.settings=</span><span class="fu">simpleTheme</span>(<span class="at">pch=</span><span class="dv">16</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="st">"lightblue3"</span>,<span class="st">"blue"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>A striking feature is that the very high values, for both csoa and it, occur only for elderly males. It is apparent that the long response times for some of the elderly males occur, as we might have expected, with the low contrast target.</p>
-<p><a href="#fig-fig17">Figure&nbsp;<span>2.11</span></a> puts smooth curves through the data, separately for the two target types:</p>
+<p><a href="#fig-fig17">Figure&nbsp;<span>2.10</span></a> puts smooth curves through the data, separately for the two target types:</p>
 <div class="cell">
 
 </div>
@@ -741,12 +724,12 @@ Providing it is installed, the <em>grid</em> package will be attached automatica
 <div id="fig-fig17" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="graphs_files/figure-html/fig-fig17-1.png" class="img-fluid figure-img" width="480"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2.11: Smooth curves have been added to the plots, separately for the two types of target</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2.10: Smooth curves have been added to the plots, separately for the two types of target</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-<p>The relationship between <code>csoa</code> and <code>it</code> seems much the same for both levels of contrast. Finally, we do a plot (<a href="#fig-fig18">Figure&nbsp;<span>2.12</span></a>) that uses different symbols (in black and white) for different levels of tinting. The longest times are for the high level of tinting.</p>
+<p>The relationship between <code>csoa</code> and <code>it</code> seems much the same for both levels of contrast. Finally, we do a plot (<a href="#fig-fig18">Figure&nbsp;<span>2.11</span></a>) that uses different symbols (in black and white) for different levels of tinting. The longest times are for the high level of tinting.</p>
 <div class="cell">
 
 </div>
@@ -755,7 +738,7 @@ Providing it is installed, the <em>grid</em> package will be attached automatica
 <div id="fig-fig18" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="graphs_files/figure-html/fig-fig18-1.png" class="img-fluid figure-img" width="480"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2.12: Panels show ``csoa versus it, for each combination of females/males and elderly/young. The different levels of tinting (no, +=low, &gt;=high) are shown with different symbols.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2.11: Panels show ``csoa versus it, for each combination of females/males and elderly/young. The different levels of tinting (no, +=low, &gt;=high) are shown with different symbols.</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -793,39 +776,72 @@ Providing it is installed, the <em>grid</em> package will be attached automatica
 <span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">scales=</span><span class="fu">list</span>(<span class="at">y=</span><span class="fu">list</span>(<span class="at">relation=</span><span class="st">"free"</span>)) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
+<section id="data-compared-with-simulated-normal-data" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="data-compared-with-simulated-normal-data">Data, compared with simulated normal data</h3>
+<section id="is-the-sample-data-consistent-with-random-normal-data" class="level4 unnumbered">
+<h4 class="unnumbered anchored" data-anchor-id="is-the-sample-data-consistent-with-random-normal-data">Is the sample data consistent with random normal data?</h4>
+<div class="cell">
+
+</div>
+<div class="cell" data-fig.asp="0.55">
+<div class="cell-output-display">
+<div id="fig-fig19" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="graphs_files/figure-html/fig-fig19-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2.12: Normal probability plots. If data are from a normal distribution then points should fall, on average, along a line. The plot in the top left shows the 43 lengths of female possums. The other plots are for independent normal random samples of size 43.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>There is one unusually small value. Otherwise the points for the female possum lengths are as close to a straight line as in many of the plots for random normal data. Code is:</p>
+<div class="cell">
+
+</div>
+<p>The idea is an important one. In order to judge whether data are normally distributed, examine a number of randomly generated samples of the same size from a normal distribution. It is a way to train the eye, to give an idea of the extent to which departures from linearity may be explained as random variation The mean and standard deviation is best matched to that of the data that are under investigation.</p>
+<p>For comparison, for readers who are interested, here is code that plots the same data using base graphics:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">4</span>), <span class="at">mgp=</span><span class="fu">c</span>(<span class="fl">1.8</span>,<span class="fl">0.5</span>,<span class="dv">0</span>), <span class="at">mar=</span><span class="fu">c</span>(<span class="fl">3.1</span>,<span class="fl">3.6</span>,<span class="fl">2.6</span>,<span class="fl">1.6</span>))             <span class="co"># A 2 by 4 layout of plots</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>gps <span class="ot">&lt;-</span> <span class="fu">unique</span>(dat<span class="sc">$</span>gp)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (val <span class="cf">in</span> gps){</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="fu">subset</span>(dat, gp<span class="sc">==</span>val)<span class="sc">$</span>y</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(x, <span class="at">xlab=</span><span class="st">""</span>, <span class="at">ylab=</span><span class="st">"Length"</span>, <span class="at">main=</span>levs)  </span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
 <section id="adding-new-layers" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="adding-new-layers">Adding new layers</h3>
 <p>The <em>latticeExtra</em> package provides wide-ranging abilities for overlaying or underlaying an existing graphics object. Or, given an initial graphics object, a separate graphics object can be converted to a layer that is then added to the initial object.</p>
 <p>In each instance, conditioning variables can be added. In most cases, a groups parameter can be specified, i.e., the plot is repeated for the groupings within the one panel. The data on athletes in the Australian Institute of Sport, in the dataset <code>DAAG::ais</code> will be used for the example that now follows. The following show haemoglobin count versus red blood cell count, distinguished by sport within panel, with separate panels for females and males:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(latticeExtra)</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>aisBS <span class="ot">&lt;-</span> <span class="fu">subset</span>(DAAG<span class="sc">::</span>ais, sport <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"B_Ball"</span>, <span class="st">"Swim"</span>))</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>basic1 <span class="ot">&lt;-</span>  <span class="fu">xyplot</span>(hc <span class="sc">~</span> rcc <span class="sc">|</span> sex, <span class="at">groups=</span>sport[<span class="at">drop=</span><span class="cn">TRUE</span>],  <span class="at">data=</span>aisBS)</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>basic2 <span class="ot">&lt;-</span> <span class="fu">update</span>(basic1,</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">par.settings=</span><span class="fu">simpleTheme</span>(<span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="at">lty=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">lwd=</span><span class="fl">1.5</span>),</span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Plot characters 1 and 3 distinguish the groups</span></span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">strip=</span><span class="fu">strip.custom</span>(<span class="at">factor.levels=</span><span class="fu">c</span>(<span class="st">"Female"</span>,<span class="st">"Male"</span>)),</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Label the panels "Female" and "Male", not "f" and "m"</span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">scales=</span><span class="fu">list</span>(<span class="at">tck=</span><span class="fl">0.5</span>), <span class="at">auto.key=</span><span class="fu">list</span>(<span class="at">columns=</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(latticeExtra)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>aisBS <span class="ot">&lt;-</span> <span class="fu">subset</span>(DAAG<span class="sc">::</span>ais, sport <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"B_Ball"</span>, <span class="st">"Swim"</span>))</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>basic1 <span class="ot">&lt;-</span>  <span class="fu">xyplot</span>(hc <span class="sc">~</span> rcc <span class="sc">|</span> sex, <span class="at">groups=</span>sport[<span class="at">drop=</span><span class="cn">TRUE</span>],  <span class="at">data=</span>aisBS)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>basic2 <span class="ot">&lt;-</span> <span class="fu">update</span>(basic1,</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">par.settings=</span><span class="fu">simpleTheme</span>(<span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>), <span class="at">lty=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="at">lwd=</span><span class="fl">1.5</span>),</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Plot characters 1 and 3 distinguish the groups</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">strip=</span><span class="fu">strip.custom</span>(<span class="at">factor.levels=</span><span class="fu">c</span>(<span class="st">"Female"</span>,<span class="st">"Male"</span>)),</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Label the panels "Female" and "Male", not "f" and "m"</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">scales=</span><span class="fu">list</span>(<span class="at">tck=</span><span class="fl">0.5</span>), <span class="at">auto.key=</span><span class="fu">list</span>(<span class="at">columns=</span><span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Printing the object <code>basic1</code> would give a very basic plot. The object <code>basic2</code> sets separate line types for males and females, creates thicker lines, specefies strip level names that are different from the group level names, reduces the length of the axis ticks, and adds a key.</p>
 <p>The <code>xyplot()</code> function has provision for the addition of separate lines for the two sports, but not for the parallel lines that are preferred. The following creates a new layer. The values <code>x</code> and <code>y</code> will be taken from the data used for the object <code>basic1</code>, when the new layer is added. Code for the new layer is:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>layer2 <span class="ot">&lt;-</span> <span class="fu">layer</span>(parallel.fit <span class="ot">&lt;-</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">fitted</span>(<span class="fu">lm</span>(y <span class="sc">~</span> groups[subscripts] <span class="sc">+</span> x)),</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>                <span class="fu">panel.superpose</span>(x, parallel.fit, <span class="at">type =</span> <span class="st">"r"</span>, ...))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>layer2 <span class="ot">&lt;-</span> <span class="fu">layer</span>(parallel.fit <span class="ot">&lt;-</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">fitted</span>(<span class="fu">lm</span>(y <span class="sc">~</span> groups[subscripts] <span class="sc">+</span> x)),</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>                <span class="fu">panel.superpose</span>(x, parallel.fit, <span class="at">type =</span> <span class="st">"r"</span>, ...))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The following <code>print</code>s the graph:</p>
 <div class="cell">
 
 </div>
 <div class="cell" data-fig.asp="0.75">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>basic2<span class="sc">+</span>layer2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>basic2<span class="sc">+</span>layer2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-fig19" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-fig20" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="graphs_files/figure-html/fig-fig19-1.png" class="img-fluid figure-img" width="480"></p>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2.13: paste(cap19)</figcaption><p></p>
+<p><img src="graphs_files/figure-html/fig-fig20-1.png" class="img-fluid figure-img" width="480"></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2.13: paste(cap20)</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -856,23 +872,23 @@ levelplot(numeric ~ numeric * numeric, . .)       # Contour plot variant</code><
 </div>
 <div class="cell" data-fig.asp="0.55">
 <div class="cell-output-display">
-<div id="fig-fig20" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-fig21" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="graphs_files/figure-html/fig-fig20-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
+<p><img src="graphs_files/figure-html/fig-fig21-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
 <p></p><figcaption class="figure-caption">Figure&nbsp;2.14: Examples where one or both axis labels are mathematical expressions,</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mgp=</span><span class="fu">c</span>(<span class="fl">1.8</span>,<span class="fl">0.5</span>,<span class="dv">0</span>), <span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">15</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> pi<span class="sc">*</span>r<span class="sc">^</span><span class="dv">2</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r, y, <span class="at">xlab=</span><span class="fu">expression</span>(<span class="st">"Radius = "</span><span class="sc">*</span>r), <span class="at">ylab=</span><span class="fu">expression</span>(Area <span class="sc">==</span> pi<span class="sc">*</span><span class="er">~</span>r<span class="sc">^</span><span class="er">~</span><span class="dv">2</span>))</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main=</span><span class="fu">expression</span>(<span class="st">"A: Plot of Area = "</span><span class="sc">*</span>pi<span class="sc">*</span><span class="er">~</span>r<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span><span class="st">" vs Radius = "</span><span class="sc">*</span>r))</span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">log</span>(x<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>x)), <span class="at">from=</span><span class="fl">0.01</span>, <span class="at">to=</span><span class="fl">0.99</span>, <span class="at">xlab=</span><span class="fu">expression</span>(pi),</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab=</span><span class="fu">expression</span>(<span class="fu">log</span>(<span class="fu">frac</span>(pi,<span class="dv">1</span><span class="sc">-</span>pi))))</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main=</span><span class="fu">expression</span>(<span class="st">"B: Plot of "</span><span class="sc">*</span><span class="fu">log</span>(<span class="fu">frac</span>(pi,<span class="dv">1</span><span class="sc">-</span>pi))<span class="sc">*</span><span class="st">" against "</span><span class="sc">*</span>pi))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mgp=</span><span class="fu">c</span>(<span class="fl">1.8</span>,<span class="fl">0.5</span>,<span class="dv">0</span>), <span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">15</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> pi<span class="sc">*</span>r<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(r, y, <span class="at">xlab=</span><span class="fu">expression</span>(<span class="st">"Radius = "</span><span class="sc">*</span>r), <span class="at">ylab=</span><span class="fu">expression</span>(Area <span class="sc">==</span> pi<span class="sc">*</span><span class="er">~</span>r<span class="sc">^</span><span class="er">~</span><span class="dv">2</span>))</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main=</span><span class="fu">expression</span>(<span class="st">"A: Plot of Area = "</span><span class="sc">*</span>pi<span class="sc">*</span><span class="er">~</span>r<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span><span class="st">" vs Radius = "</span><span class="sc">*</span>r))</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="fu">log</span>(x<span class="sc">/</span>(<span class="dv">1</span><span class="sc">-</span>x)), <span class="at">from=</span><span class="fl">0.01</span>, <span class="at">to=</span><span class="fl">0.99</span>, <span class="at">xlab=</span><span class="fu">expression</span>(pi),</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">ylab=</span><span class="fu">expression</span>(<span class="fu">log</span>(<span class="fu">frac</span>(pi,<span class="dv">1</span><span class="sc">-</span>pi))))</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span>(<span class="at">main=</span><span class="fu">expression</span>(<span class="st">"B: Plot of "</span><span class="sc">*</span><span class="fu">log</span>(<span class="fu">frac</span>(pi,<span class="dv">1</span><span class="sc">-</span>pi))<span class="sc">*</span><span class="st">" against "</span><span class="sc">*</span>pi))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>For <em>lattice</em> and <em>ggplot2</em> graphics as well as base graphics, expressions of the type shown can appear anywhere in place of a character vector.</p>
 <p>Notice that in <code>ylab = expression(Area == pi*r^2)</code>, there is a double equals sign (<code>==</code>), although what will appear on the plot has a single equals sign. See <code>?plotmath</code> for detailed information on the plotting of mathematical expressions. Notice that <code>*</code> juxtaposes both text and mathematical symbols. Notice also that <code>~</code> been used to insert space before <span class="math inline">\(r\)</span> and <code>phantom(,)</code> between <span class="math inline">\(r\)</span> and the superscript 2. The final plot from <code>demo(graphics)</code> demonstrates some of the possibilities for plotting mathematical symbols.</p>
@@ -900,12 +916,12 @@ Use colour or different plotting symbols to distinguish different groups. Take c
 <li>Use the identify function to label points for the years that correspond to the lowest and highest mean levels. That is, type</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">identify</span>(huron<span class="sc">$</span>year,huron<span class="sc">$</span>mean.height,<span class="at">labels=</span>huron<span class="sc">$</span>year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">identify</span>(huron<span class="sc">$</span>year,huron<span class="sc">$</span>mean.height,<span class="at">labels=</span>huron<span class="sc">$</span>year)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>and use the left mouse button to click on the lowest point and highest point on the plot. To quit, press (depending on the operating system) a mouse button other than the left, or press ESC.<br>
 c) As in the case of many time series, the mean levels are correlated from year to year. To see how each year’s mean level is related to the previous year’s mean level, use</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lag.plot</span>(huron<span class="sc">$</span>mean.height)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lag.plot</span>(huron<span class="sc">$</span>mean.height)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This plots the mean level at year i against the mean level at year i-1.</p>
 <ol start="2" type="1">

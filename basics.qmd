@@ -1618,11 +1618,16 @@ the for each interval.
 
  @BraunMurdoch_2021 . A first course in statistical programming with R. 
 
- @Dalg . Introductory Statistics with R. 
- This introductory text has a biostatistical emphasis.  
+ @Dalg . Introductory Statistics with R.  
+ [This introductory text has a biostatistical emphasis.]
 
  @maindonald2010data . Data Analysis and Graphics Using R –-
-An Example-Based Approach. 
+An Example-Based Approach.
+
+ @maindonald2023 . A Practical Guide to Data Analysis Using R.
+  An Example-Based Approach. Cambridge University Press.  
+  [Appendix A gives a brief overview of the R language and
+  system.]
 
  @Matloff2011 . The Art of R Programming.
 
@@ -1630,9 +1635,9 @@ An Example-Based Approach.
 
  @Muenchen . R for SAS and SPSS Users.
 
- @VR-MASS .  Modern Applied Statistics with S. 
- This assumes a fair level of statistical sophistication.
-Explanation is careful, but often terse.
+ @VR-MASS .  Modern Applied Statistics with S.  
+ [This assumes a fair level of statistical sophistication.
+Explanation is careful, but often terse.\]
 
  @Wickham-RforData .  R for Data Science.
 
