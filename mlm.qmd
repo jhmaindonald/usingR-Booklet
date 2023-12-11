@@ -1,0 +1,185 @@
+# Multi-Level Models and Repeated Measures Models
+Models have both a fixed effects structure and an error structure. 
+For example, in an inter-laboratory comparison there may be variation 
+between laboratories, between observers within laboratories, and 
+between multiple determinations made by the same observer on 
+different samples.  If we treat laboratories and observers as random, 
+the only fixed effect is the mean.  
+
+The functions `lme()` and `nlme()`, from the Pinheiro and Bates _nlme_ 
+package, handle models in which a repeated measures error structure 
+is superimposed on a linear (`lme4()`) or non-linear (`nlme()`) model.
+The `lme()` function is broadly comparable to Proc Mixed in the 
+widely used SAS statistical package.  The function `lme()` has 
+associated with it important abilities for diagnostic checking and 
+other insight. 
+
+There is a strong link between a wide class of repeated measures 
+models and time series models.  In the time series context there 
+is usually just one realization of the series, which may however 
+be observed at a large number of time points.  In the repeated 
+measures context there may be a large number of realizations of 
+a series that is typically quite short. 
+
+## Multi-level models -- examples
+
+### The Kiwifruit Shading Data, Again {-}
+Refer back to @sec-errorAOV for details of the data.  The fixed 
+effects are `block` and treatment (`shade`).  The random effects are 
+block (though making block a random effect is optional, for purposes 
+of comparing treatments), `plot` within `block`, and units within 
+each block/plot combination.  Here is the analysis:
+```{r}
+library(nlme)
+kiwishade <- DAAG::kiwishade
+kiwishade$plot <- factor(paste(kiwishade$block, kiwishade$shade, 
+    sep="."))
+kiwishade.lme <- lme(yield~shade,random=~1|block/plot, data=kiwishade)
+summary(kiwishade.lme)
+anova(kiwishade.lme)
+intervals(kiwishade.lme)
+```
+
+We are interested in the three sd estimates. By squaring the standard deviations and converting them to variances we get the information in the following table:  
+
+|                      |  Variance component |	Notes                    |
+|:---------------------|:--------------------|:--------------------------|
+block	                 |2.0192$^2$ = 4.076	 |Three blocks               |
+plot	                 |1.4792$^2$ =  2.186	 |4 plots per block          |
+residual (within group)|3.4902$^2$=12.180	   |4 vines (subplots) per plot|  
+
+The above gives the information for an analysis of variance table.  We have:  
+
+|  	    |Variance component|Mean square for anova table|d.f.                             |
+:-------|:-----------------|:--------------------------|:--------------------------------|
+block	  |4.076	           |12.180 + 4 $\times$ 2.186 + 16 $\times$ 4.076 = 86.14|2 (3-1)|
+plot	  |2.186	           |12.180 + 4 $\times$ 2.186 = 20.92	                   |6 (3-1)$\times$(4-1)|
+residual (within gp)|12.180|12.18	                                              |3 $\times$ 4 $\times$ (4-1)|  
+
+
+Now see where these same pieces of information appeared in the analysis of variance table of @sec-errorAOV:
+```{r}
+kiwishade.aov<-aov(yield~block+shade+Error(block:shade),data=kiwishade)
+summary(kiwishade.aov)
+```
+
+### The Tinting of Car Windows {-}
+In @sec-lattice we encountered data from an experiment that aimed
+to model the effects of the tinting of car windows on visual
+performance .  The authors are mainly interested in effects on
+side window vision, and hence in visual recognition tasks that
+would be performed when looking through side windows.  Data are
+in the data frame tinting.  In this data frame, `csoa` (critical
+stimulus onset asynchrony, i.e. the time in milliseconds required
+to recognise an alphanumeric target), `it` (inspection time,
+i.e. the time required for a simple discrimination task) and age
+are variables, while `tint` (3 levels) and `target` (2 levels) are
+ordered factors.  The variable `sex` is coded 1 for `males` and 2 for
+females, while the variable `agegp` is coded 1 for young people
+(all in their early 20s) and 2 for older participants (all in the
+early 70s).
+
+We have two levels of variation – within individuals (who were
+each tested on each combination of `tint` and `target`), and between
+individuals.  So we need to specify `id` (identifying the
+individual) as a random effect.  Plots such as we examined in
+@sec-lattice make it clear that, to get variances that are
+approximately homogeneous, we need to work with `log(csoa)` and
+`log(it)`.  Here we examine the analysis for `log(it)`.  We start
+with a model that is likely to be more complex than we need (it
+has all possible interactions):  
+```{r}
+tinting <- DAAG::tinting
+itstar.lme<-lme(log(it)~tint*target*agegp*sex,
+  random=~1|id, data=tinting,method="ML")
+```  
+A reasonable guess is that first order interactions may be 
+all we need, i.e. 
+```{r}
+it2.lme<-lme(log(it)~(tint+target+agegp+sex)^2,
+  random=~1|id, data=tinting,method="ML")
+```
+Finally, there is the very simple model, allowing only for main effects:
+```{r}
+it1.lme<-lme(log(it)~(tint+target+agegp+sex),
+  random=~1|id, data=tinting,method="ML")
+```
+Note that all these models have been fitted by maximum likelihood.
+This allows the equivalent of an analysis of variance comparison.  
+Here is what we get:
+```{r}
+anova(itstar.lme,it2.lme,it1.lme)
+```
+
+The model that limits attention to first order interactions 
+appears adequate.  As a preliminary to examining the first 
+order interactions individually, we re-fit the model used 
+for `it2.lme`, now with `method="REML"`.  
+```{r}
+it2.reml<-update(it2.lme,method="REML")
+```  
+We now examine the estimated effects:
+```{r}
+options(digits=3)
+summary(it2.reml)$tTable
+```
+Because tint is an ordered factor, polynomial contrasts are used.
+
+### The Michelson Speed of Light Data {-}
+The `MASS::michelson` dataframe has columns `Speed`, `Run`, and `Expt`, 
+for five experiments of 20 runs each. A plot of the data seems
+consistent with sequential dependence within runs, possibly with
+random variation between runs.
+```{r, echo=F}
+cap45 <- "Plots show speed of light estimates against run number,
+for each of five experiments."
+```
+
+```{r, fig.asp=0.38, fig.width=7.5, echo=F}
+#| label: fig-fig45
+#| fig-cap: !expr paste(cap45)
+
+michelson <- MASS::michelson
+lattice::xyplot(Speed~Run|factor(Expt), layout=c(5,1),
+                data=michelson, type=c('p','r'),
+                scales=list(x=list(at=seq(from=1,to=19, by=3))))
+```  
+Code is:
+```{r, fig.asp=0.38, fig.width=7.5, eval=F}
+#| label: fig-fig45
+```  
+We try a model that allows the estimates to vary linearly 
+with Run (from 1 to 20), with the slope varying randomly 
+between experiments. We assume an autoregressive dependence 
+structure of order 1.  We allow the variance to change from 
+one experiment to another. 
+
+To test whether this level of model complexity is justified 
+statistically, one needs to compare models with and without
+these effects, setting `method="ML"` in
+each case, and compare the likelihoods.
+```{r}
+michelson <- MASS::michelson
+library(nlme)
+michelson$Run <- as.numeric(michelson$Run)   # Ensure Run is a variable
+mich.lme1 <- lme(fixed = Speed ~ Run, data = michelson, 
+	  random =  ~ Run| Expt, correlation = corAR1(form =  ~ 1 | Expt), 
+      weights = varIdent(form =  ~ 1 | Expt), method='ML')
+mich.lme0 <- lme(fixed = Speed ~ Run, data = michelson, 
+	  random =  ~ 1| Expt, correlation = corAR1(form =  ~ 1 | Expt), 
+      weights = varIdent(form =  ~ 1 | Expt), method='ML')
+anova(mich.lme0, mich.lme1)
+```
+The simpler model is preferred.  Can it be simplified further?
+
+## References and reading
+
+See the vignettes that accompany the _lme4_ package.
+
+@maindonald2010data . Data Analysis and Graphics Using R –-
+An Example-Based Approach. Cambridge University Press.
+
+@maindonald2023 . A Practical Guide to Data Analysis Using R.
+  An Example-Based Approach. Cambridge University Press.
+
+@PinBates .  Mixed effects models in S and S-PLUS.  Springer.
