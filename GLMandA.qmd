@@ -12,25 +12,31 @@ Observed value = Model Prediction + Statistical Error
 
 Often it is assumed that the statistical error values (values of $\epsilon$ in the discussion below) are independently and identically distributed as Normal. Generalized Linear Models, and the other extensions we describe, allow a variety of non-normal distributions. In the discussion of this section, the focus is on the form of the model prediction, leaving until later sections the discussion of different possibilities for the 'error' distribution.
 
-### Multiple regression models
-
-The various other models we describe are, in essence, generalizations of the multiple regression model, fitted in earlier chapters using `lm()`. $$
+The various other models we describe are, in essence, generalizations of the multiple regression model, fitted in earlier chapters using `lm()`. 
+$$
     y = b_0 + b_1 x_1 + b_2 x_2 + . . . + b_p x_p + \epsilon
-$$ \### Generalized Linear Model (e.g. logit model) To simplify the discussion, a single explanatory variable will be assumed. $$
+$$ 
+### Generalized Linear Model (e.g. logit model) {-}
+To simplify the discussion, a single explanatory variable will be assumed. 
+$$
     y = g(b_0 + b_1 x_1) + \epsilon,\\
     \mbox{so that } \mbox{E}[y] = g(b_0 + b_1 x_1)
-$$ Here `g()` is selected from one of a small number of options. For logit models, with $\mu$ the expected number of 'successes'. Then: $$
+$$ 
+Here `g()` is selected from one of a small number of options. For logit models, with $\mu$ the expected number of 'successes'. Then: 
+$$
     \mu = n \dfrac{\eta}{1+e^\eta}, 
     \mbox{  where } \eta = b_0 + b_1 x_1
-$$ Here $\dfrac{\mu}{n}$ is an expected proportion.
+$$ 
+Here $\dfrac{\mu}{n}$ is an expected proportion.
 
-We can turn this model around, and write $$
+We can turn this model around, and write 
+$$
     \eta = \log(\dfrac{\mu}{n+\mu}) = f(\frac{\pi}{1-\pi}), \mbox{ where } \pi=\frac{\mu}{n}
 $$
 
 Here `f()` is the logit link.
 
-Generalized Additive Model
+### Generalized Additive Models (to be introduced later) {-}
 
 Generalized Additive Models are a generalization of Generalized Linear Models. For example, g(.) may be the function that undoes the logit transformation, as in a logistic regression model.
 
@@ -38,15 +44,17 @@ Some terms may be smoothing functions, while others may be the usual linear mode
 
 ## Logistic Regression
 
-We will use a logistic regression model as a starting point for discussing Generalized Linear Models. With proportions that range from less than 0.1 to 0.99, it is not reasonable to expect that the expected proportion will be a linear function of `x`. Some such transformation (`link` function) as the logit is required. Logit models transform to a `log(odds)` scale. If `p` is a probability (e.g. that horse A will win the race), then the corresponding odds are `p/(1-p)`, and $$
+We will use a logistic regression model as a starting point for discussing Generalized Linear Models. With proportions that range from less than 0.1 to 0.99, it is not reasonable to expect that the expected proportion will be a linear function of `x`. Some such transformation (`link` function) as the logit is required. Logit models transform to a `log(odds)` scale. If `p` is a probability (e.g. that horse A will win the race), then the corresponding odds are `p/(1-p)`, and 
+$$
     log(\mbox{odds}) = log(\frac{p}{1-p}) = log(p) - log(1-p)
-$$ The linear model predicts, not p, but $log(\frac{p}{1-p})$.
+$$ 
+The linear model predicts, not p, but $log(\frac{p}{1-p})$.
 
 The logit or log(odds) function turns expected proportions into values that may range from $-\infty$ to $\infty$. The values from the linear model may in principle vary across the whole real line. One needs a transformation, such as the logit, such that transformed values may extend outside the range from 0 to 1.
 
 Among other link functions that are used with proportions, one of the commonest is the complementary log-log link. See `?make.link` for details of those that are available for use with GLM models, as fitted using `glm()`.
 
-### Anesthetic Depth Example
+### Anesthetic Depth Example {-}
 
 Thirty patients were given an anesthetic agent that was maintained at a pre-determined \[alveolar\] concentration for 15 minutes before making an incision . It was then noted whether the patient moved, i.e. jerked or twisted. The interest is in estimating how the probability of jerking or twisting varies with increasing concentration of the anesthetic agent.
 
@@ -68,7 +76,7 @@ We fit two models, the logit model and the complementary log-log model. We can f
 | mean sum of squares (divide by d.f.) | mean deviance (divide by d.f.) |
 | Minimize residual sum of squares     | Minimize deviance              |
 
-If individuals respond independently, with the same probability, then we have Bernoulli trials. Justification for assuming the same probability will arise from the way in which individuals are sampled. While individuals will certainly be different in their response the notion is that, each time a new individual is taken, they are drawn at random from some larger population.\
+If individuals respond independently, with the same probability, then we have Bernoulli trials. Justification for assuming the same probability will arise from the way in which individuals are sampled. While individuals will certainly be different in their response the notion is that, each time a new individual is taken, they are drawn at random from some larger population. 
 Here is the R code:
 
 ```{r}
@@ -114,11 +122,11 @@ anaes.logit <- glm(nomove ~ conc, family = binomial(link = logit),
 
 The family parameter specifies the distribution for the dependent variable. An optional argument allows specification of the link function. Below we give further examples.
 
-### Data in the form of counts
+### Data in the form of counts {-}
 
 Data that are in the form of counts can often be analysed quite effectively assuming the poisson family. The link that is commonly used is log. The log link transforms from positive numbers to numbers in the range $-\infty$ to $\infty$.
 
-### The gaussian family
+### The gaussian family {-}
 
 If no family is specified, then the family is taken to be gaussian.\
 The default link is then the identity, effectively giving an `lm` model. This way of formulating a linear model has the advantage that one is not restricted to what is effectively the identity link.
@@ -130,11 +138,11 @@ air.glm<-glm(Ozone^(1/3) ~ Solar.R + Wind + Temp, data = airquality)
 summary(air.glm)  
 ```
 
-## Models that include spline terms
+## Generalized Additive Models (GAMs)
 
 In most circumstances, rather than adding regression spline terms to `lm` style linear models, it is better to move directly to using the penalized spline approach, with automatic choice of smoothing parameter, that is implemented in the *mgcv* package. Note however the risk of over-fitting is there is a correlation structure in the data, such as is likely to be present for time sereis.
 
-### Dewpoint Data
+### Dewpoint Data {-}
 
 The data set dewpoint has columns `mintemp`, `maxtemp` and `dewpoint`. The dewpoint values are averages, for each combination of `mintemp` and `maxtemp`, of monthly data from a number of different times and locations. We fit the model:
 
@@ -150,9 +158,9 @@ dewpoint.gam <- gam(dewpt ~ s(mintemp) + s(maxtemp),
 summary(dewpoint.gam, digits=3)
 ```
 
-### Model Summaries
+### Model Summaries {-}
 
-Type in
+Type:
 
 ```{r, eval=F}
 methods(summary)
@@ -162,17 +170,17 @@ to get a list of the summary methods that are available. You may want to mix and
 
 ## Further types of model
 
-### Survival Analysis
+### Survival Analysis {-}
 
-For example times at which subjects were either lost to the study or died ('failed') may be recorded for individuals in each of several treatment groups. Engineering or business failures can be modelled using this same methodology. The R survival package has state of the art abilities for survival analysis.
+For example times at which subjects were either lost to the study or died ('failed') may be recorded for individuals in each of several treatment groups. Engineering or business failures can be modeled using this same methodology. The R survival package has state of the art abilities for survival analysis.
 
-### Nonlinear Models
+### Nonlinear Models {-}
 
 The function `nls()` (non-linear least squares) can be used to obtain a least squares fit to a non-linear function.
 
 ## Further Elaborations
 
-Generalised Linear Models were developed in the 1970s. They unified a wide range of what had earlier been treated as distinct methods, and have now become a stock-in-trade of statistical analysts. Their practical implementation took advantage of new computational abilities that had been developed for handling linear model calculations.
+Generalized Linear Models were developed in the 1970s. They unified a wide range of what had earlier been treated as distinct methods, and have now become a stock-in-trade of statistical analysts. Their practical implementation took advantage of new computational abilities that had been developed for handling linear model calculations.
 
 Practical data analysis demands further elaborations. An important elaboration is to the incorporation of more than one term in the error structure. The R *nlme* and *lme4* packages implement such extensions, for a wide class of nonlinear models as well for linear models. Each such new development builds on the theoretical and computational tools that have arisen from earlier developments. Powerful new analysis tools will continue to appear for a long time yet. This is fortunate. Most professional users of R will regularly encounter data where the methodology that the data ideally demands is not yet available.
 
