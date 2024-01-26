@@ -17,8 +17,14 @@ q()
 ```
 
 An alternative to the use of `q()` is to click on the **File** menu and then on **Exit**. There will be a message asking whether to save the workspace image. Clicking **Yes** (the safe option) will save all the objects that remain in the workspace --- any that remain from the start of the session and any that have been added since. RStudio users can click on one of the options that are available under the **Session** menu header.  
+
+The _workspace_ is the name given to a _database_ (as it is called) that
+holds objects (datasets and functions) that have been created or copied 
+in by the user, and have not been subsequently deleted. Depending on 
+session settings, these may add to objects that were saved from a 
+previous session and re-loaded at startup.
   
-#### Some notational details {-}  
+#### Some notational details {.unnumbered}  
 
 As noted earlier, the command line prompt is
 ```
@@ -36,11 +42,11 @@ command is typed in as we show it.
 
 For the names of R objects or commands, case is significant. Thus `Austpop` is different from `austpop`. For file names when using Windows, however, the Microsoft Windows conventions apply, and case does not distinguish file names. On Unix and Mac systems, letters that have a different case are treated as different.
 
-Anything that follows a `#` on the command line is taken as comment.
+Anything that follows `#` on the command line is taken as comment.
 
 *Note:* Recall that, in order to quit from the R session we could type `q()`. This is because `q` is a function. Typing `q` on its own, without the parentheses, displays the text of the function on the screen. Try it!
 
-### Base, recommended, and other packages {-}
+### Base, recommended, and other packages {.unnumbered}
 ```{r}
 ## Base packages
 names(which(installed.packages()[ ,"Priority"] == "base", ))
@@ -68,9 +74,9 @@ that were attached in the earlier session.
 
 It pays to have a separate working directory for each major project. RStudio makes it straightforward, both to set up a new project in a new directory, and to move between projects.
 
-### Some ways to use R {-}
+### Some ways to use R {.unnumbered}
 
-#### R may be used as a calculator. {-}
+#### R may be used as a calculator. {.unnumbered}
 
 R evaluates and prints out the result of any expression that one types in at the command line in the console window. Expressions are typed following the prompt (`>`) on the screen. The result, if any, appears on subsequent lines.
 
@@ -89,7 +95,7 @@ sin(c(30,60,90)*pi/180)  # The result is the same
 ```  
 Observe that `c()` is a function that joins vectors together
 
-### R makes it easy to create plots and other forms of data summary
+### R makes it easy to create plots and other forms of data summary {.unnumbered}
 
 As a relatively simple example, where all columns are numeric, consider the data frame `austpop` that holds population figures (in thousands) for Australian states and territories, and total population, at various times since 1917. Assuming that the *DAAG* package has been installed, this can be accessed as `DAAG::austpop`. The data are:
 
@@ -123,7 +129,7 @@ Code is:
 The option `pch=16` sets the plotting character to a solid black dot. This plot can be improved greatly. We can specify more informative axis labels, change size of the text and of the plotting symbol, and so on.
 
 
-#### R provides a huge range of abilities for working with data {-}
+#### R provides a huge range of abilities for working with data {.unnumbered}
 
 Between the base, recommended, and huge range of contributed packages,
 R offers wide-ranging abilities for data manipulation, for data summary, 
@@ -216,7 +222,7 @@ abline(elastic.lm)  # Add regression line to graph
 #| label: fig-fig3
 ```
 
-#### R is an interactive programming language {-}
+#### R is an interactive programming language {.unnumbered}
 
 We calculate the Fahrenheit temperatures that correspond to Celsius temperatures 25, 26, ..., 30:
 
@@ -227,7 +233,7 @@ conversion <- data.frame(Celsius=celsius, Fahrenheit=fahrenheit)
 print(conversion)
 ```
 
-#### Extensive help is available from the command line {-}
+#### Extensive help is available from the command line {.unnumbered}
 
 To get a help on an R object, use `help()` or `?`, thus
 
@@ -264,7 +270,7 @@ c(”Canberra”,”Sydney”,”Newcastle”,”Darwin”)
 
 Vectors may have mode logical, numeric or character . The first two vectors above are numeric, the third is logical (i.e. a vector with elements of mode logical), and the fourth is a string vector (i.e. a vector with elements of mode character). The missing value symbol, which is NA, can be included as an element of a vector.
 
-#### Joining (concatenating) vectors {-}
+#### Joining (concatenating) vectors {.unnumbered}
 
 The `c` in `c(2, 3, 5, 7, 1)` above is an acronym for "concatenate", i.e. the meaning is: "Join these numbers together in to a vector. Existing vectors may be included among the elements that are to be concatenated. In the following we form vectors `x` and `y`, which we then concatenate to form a vector `z`:
 
@@ -279,7 +285,7 @@ z
 
 The concatenate function `c()` may also be used to join lists.
 
-#### Subsets of Vectors {-}
+#### Subsets of Vectors {.unnumbered}
 
 There are two common ways to extract subsets of vectors.\
 1. Specify the numbers of the elements that are to be extracted, e.g.
@@ -312,7 +318,7 @@ height <- c(Andreas=178, John=185, Jeff=183)
 height[c("John","Jeff")]
 ```
 
-#### Patterned Data  {-}
+#### Patterned Data  {.unnumbered}
 Use `5:15` to generate the numbers 5, 6,  . . ., 15.  Entering 15:5 will generate the sequence in the reverse order.
 To repeat the sequence (2, 3, 5) four times over, enter `rep(c(2,3,5), 4)` thus:
 ```{r}
@@ -333,7 +339,7 @@ Lists collect together, under a single name, what can be an arbitrary set
 of R objects.  These might be vectors of several different modes and lengths, 
 scalars, dates, matrices or more general arrays, or functions, etc. 
 
-### Dataframes are lists! {-}
+### Dataframes are lists! {.unnumbered}
 
 A data frame is a list of variables, all of equal length. Variables can
 be vectors (integer, or numeric, or character, or logical, or complex). 
@@ -345,7 +351,7 @@ Just as with any other list, subscripting extracts a list. Thus `Cars93.summary[
 
 R packages include a wide variety of datasets, mostly in the form of *dataframe*s. Data frames have a central role in the way that R is set up to process data, fit models, and display graphs.
 
-#### Operations with dataframes {-}
+#### Operations with dataframes {.unnumbered}
 Among the datasets in the *DAAG* package is `Cars93.summary`, created from information in the `Cars93` data set in the Venables and Ripley *MASS* package. Here it is:
 
 ```{r, eval=T}
@@ -357,7 +363,7 @@ Notice that the final column has the *mode* character. Different columns can hav
 
 The data frame has row labels (access with `row.names(Cars93.summary)`) `Compact`, `Large`, . . . The column names (access with `names(Cars93.summary)`) are `Min.passengers` (i.e. the minimum number of passengers for cars in this category), `Max.passengers`, `No.of.cars.`, and `abbrev`. The first three columns have mode numeric, and the fourth has mode character. Columns can be vectors of any mode. The column `abbrev` could equally well be stored as a factor -- more on that in due course.
 
-#### Accessing parts of data frames {-}
+#### Accessing parts of data frames {.unnumbered}
 
 A data frame that has only the first four rows and omits the third column can be extracted thus:
 
@@ -376,7 +382,7 @@ type <- Cars93.summary[[4]]    # Take the object that is stored
                                # in the fourth list element.
 ```
 
-#### *Merging Data Frames -- a simple example {-}
+#### *Merging Data Frames -- a simple example {.unnumbered}
 The data frame `MASS::Cars93` holds extensive information on data from 93 
 cars on sale in the USA in 1993.  The data frame `DAAG::Cars93.summary`
 has as row names the distinct values of the factor `Type`.  The final 
@@ -389,7 +395,7 @@ Cars93.summary
 We proceed thus to add a column that has the abbreviations to the data frame. 
 ```{r, eval=T} 
 Cars93 <- MASS::Cars93
-new.Cars93 <- merge(x=Cars93,y=Cars93.summary[,4,drop=F],
+new.Cars93 <- merge(x=Cars93, y=Cars93.summary[,4,drop=F],
    			by.x="Type", by.y="row.names") 
 ```  
 Notice that the row names of `Cars93.summary` are treated as a column of
@@ -399,9 +405,9 @@ frame that has the abbreviations in the additional column with name
 would have been omitted from the new data frame.  This can be avoided by 
 ensuring that Type has `NA` as one of its levels, in both data frames. 
 
-### Lists more generally {-}
+### Lists more generally {.unnumbered}
 
-#### Output from fitting a model is a list {-}
+#### Output from fitting a model is a list {.unnumbered}
 
 As an illustration consider the list object that R creates as output 
 from an `lm()` linear model fit.
@@ -443,7 +449,7 @@ mode(elastic.lm$call)
 
 ## Factors, dates, `NA`s, and more
 
-### Factors and ordered factors {-}
+### Factors and ordered factors {.unnumbered}
 
 A factor is stored internally as a numeric vector with values 1, 2, 3, k, where k is the number of levels. An attributes table gives the 'level' for each integer value . Factors provide a compact way to store character strings. They are crucial in the representation of categorical effects in model and graphics formulae. The class attribute of a factor has, not surprisingly, the value `"factor"`.
 
@@ -540,21 +546,22 @@ possum$sitefac <- factor(possum$sitenam, levels=ordnam)
 with(possum, table(sitefac))
 ```
 
-Factors have the potential to cause a few surprises.
+Factors have the potential to cause surprises.
 Points to note are:  
 * When a vector of character strings becomes a column of a data frame, R by default turns it into a factor.  Enclose the vector of character strings in the wrapper function `I()` if 
 it is to remain character.  With tibbles, this is not an issue.
 * There are some contexts in which factors become numeric vectors.  To be sure of getting the vector of text strings, specify e.g. `as.character(possum$sitefac)`.
 
-#### Ordered Factors {-}
+#### Ordered Factors {.unnumbered}
 Actually, it is their levels that are ordered.  To create an ordered factor, or to turn a factor into an ordered factor, use the function `ordered()`.  The levels of an ordered factor are assumed to specify positions on an ordinal scale.  Try
 ```{r}
 stress.level <- rep(c("low","medium","high"),2)
 ordf.stress <- ordered(stress.level, 
                        levels=c("low","medium","high"))
 ordf.stress
-ordf.stress<"medium"
-ordf.stress>="medium"
+ordf.stress < "medium"
+ordf.stress >= "medium"
+ordf.stress == "medium"
 ```
 
 Ordered factors `inherit` the attributes of factors, and have a further 
@@ -566,12 +573,12 @@ class(ordf.stress)
 attributes(ordf.stress)
 ```
 
-#### Inclusion of character string vectors in data frames {-}
+#### Inclusion of character string vectors in data frames {.unnumbered}
 
 When data are input using `read.table()`, or when the `data.frame()` function is used to create data frames, vectors of character strings are by default turned into factors. The parameter setting `stringsAsFactors=TRUE`, available both with `read.table()` and with `data.frame()`, will if needed ensure that character strings are input without such conversion. For `read.table()`, an alternative is `as.is=TRUE`.  When input uses functions in the _readr_ package, character strings are left
 unchanged.
 
-### Dates {-}
+### Dates {.unnumbered}
 
 See `?Dates`, `?as.Date` and `?format.Date` for information on functions
 in base R for working with dates.
@@ -621,7 +628,7 @@ julian(dd)
 julian(as.Date('1970-01-01'))                    
 ```
 
-### `NA`s (missing Values), `NaN` (not a number) and `Inf` {-}
+### `NA`s (missing Values), `NaN` (not a number) and `Inf` {.unnumbered}
 In R, the missing value symbol is NA.  Any arithmetic operation or relation 
 that involves NA generates an NA.  This applies also to the relations 
 `<`, `<=`, `>`, `>=`, `==`, `!=`.  The first four compare magnitudes, 
@@ -634,11 +641,11 @@ For example
 ```{r}
 x <- c(1,6,2,NA)
 is.na(x)            # TRUE for when NA appears, and otherwise FALSE
-x==NA     # All elements are set to NA
-NA==NA
+x == NA             # Result is NA, for all elements of `x`
+NA == NA
 ```
 
-#### The Use of `NA` in variable subscripts {-}
+#### The Use of `NA` in variable subscripts {.unnumbered}
 Any arithmetic operation or relation that involves `NA` generates an `NA`. 
 Set 
 ```{r, eval=F} 
@@ -660,7 +667,7 @@ y[x>2] <- x[x>2]
 Use `!is.na(x)` to limit the selection, on both sides, 
 to those elements of x that are not `NA`s. 
 
-#### `Inf` and `NaN` {-}
+#### `Inf` and `NaN` {.unnumbered}
 The following are allowed:
 ```{r}
 c(-1/0, 1/0, 0/0, 1/Inf)
@@ -702,10 +709,10 @@ x34
 Examples of the extraction of columns or rows or submatrices are:
 ```{r, eval=F}
 x34 <- matrix(1:12, nrow=3)
-x34[2:3,c(1,4)]  # Extract rows 2 & 3 & columns 1 & 4
-x34[2,]          # Extract the second row
-x34[-2,]         # Extract all rows except the second
-x34[-2,-3]       # Omit row 2 & column 3
+x34[2:3, c(1,4)]  # Extract rows 2 & 3 & columns 1 & 4
+x34[2,]           # Extract the second row
+x34[-2,]          # Extract all rows except the second
+x34[-2,-3]        # Omit row 2 & column 3
 ```
 The `dimnames()` function assigns and/or extracts matrix row and 
 column names.  The is a list, in which the first list element is 
@@ -713,7 +720,7 @@ the vector of row names, and the second list element is the vector
 of column names.  This generalizes in the obvious way for use with 
 arrays, which we now discuss.
 
-### Arrays {-}
+### Arrays {.unnumbered}
 The generalization from a matrix (2 dimensions) to allow more than 2 
 dimensions gives an array.  A matrix is a 2-dimensional array.
 Consider a numeric vector of length 24.  So that we can easily keep 
@@ -730,7 +737,7 @@ dim(x) <-c(3,4,2)
 x
 ```
 
-#### Conversion of numeric dataframes into matrices {-}
+#### Conversion of numeric dataframes into matrices {.unnumbered}
 There are various manipulations that are available for matrices, 
 but not for data frames.  Use `as.matrix()` to handle any 
 conversion that may be necessary.  Or, as with `apply()`, the
@@ -738,7 +745,7 @@ conversion may happen automatically.
 
 ## Data entry and editing {#sec-entry}
 
-#### Entry of Data at the Command Line {-}
+#### Entry of Data at the Command Line {.unnumbered}
 
 The following data gives, for each amount by which an elastic band is stretched over the end of a ruler, the distance that the band moved when released:
 
@@ -754,7 +761,7 @@ elasticband <- data.frame(stretch=c(46,54,48,50,44,42,52),
                           distance=c(148,182,173,166,109,141,166))
 ```
 
-#### Entry and/or editing of data in an editor window {-}
+#### Entry and/or editing of data in an editor window {.unnumbered}
 
 To edit the data frame elasticband in a spreadsheet-like format, type
 
@@ -762,7 +769,7 @@ To edit the data frame elasticband in a spreadsheet-like format, type
 elasticband <- edit(elasticband)
 ```
 
-#### Options for `read.table()` {-}
+#### Options for `read.table()` {.unnumbered}
 
 Under RStudio, input of data from files is very conveniently handled by
 selecting $\underline{File}$ | $\underline{Import \space Dataset}$ from the menu.
@@ -799,7 +806,7 @@ The name `cabbages`, appearing on its own, would be taken to
 refer to the version in the workspace, not to that in the 
 attached package _MASS_.
 
-### The function `with()` {-}
+### The function `with()` {.unnumbered}
 
 The function `with()` attaches the data frame (or, it can be a list) that 
 is given as its first argument, within a specially created _environment_ 
@@ -821,7 +828,7 @@ for a column with the name `Height`.
 with(list(x=1:3, y=5:8), mean(y))
 ```
 
-### Saving the workspace {-}
+### Saving the workspace {.unnumbered}
 
 All R entities, including functions and data structures, exist as objects. They can all be operated on as data. Type in `ls()` to see the names of all objects in your workspace. An alternative to `ls()` is `objects()`. In both cases there is provision to specify a particular pattern, e.g. starting with the letter `p`.
 
@@ -838,7 +845,7 @@ Important: On quitting, R offers the option of saving the workspace image, by de
 The function `save()` can be used to save a specific set of R objects into a named image file.
 
 
-### Functions and datasets -- one at a time, or per database? {-}
+### Functions and datasets -- one at a time, or per database? {.unnumbered}
 
 The dataset `possum` from the *DAAG* can be accessed as `DAAG::possum`, provided _DAAG_ is installed on the computer. This has the advantage of leaving no room for ambiguity over the source of the dataset.
 
@@ -876,7 +883,7 @@ ls(pos=2)	# Check the contents of the file that has been attached
 
 The parameter `pos` gives the position on the search list. 
 
-#### Datasets in R packages {-}
+#### Datasets in R packages {.unnumbered}
 Type in `data()` to get a list of data sets (mostly data frames) associated 
 with all packages that are in the current search path.  To get information 
 on the data sets that are included in the datasets package, specify
@@ -898,7 +905,7 @@ other installed package, use the `library()` command.
 
 We give two simple examples of R functions.
 
-#### An Approximate Miles to Kilometers Conversion {-}
+#### An Approximate Miles to Kilometers Conversion {.unnumbered}
 
 ```{r, eval=T}
 miles.to.km <- function(miles)miles*8/5
@@ -916,7 +923,7 @@ The function will do the conversion for several distances all at once. To conver
 miles.to.km(c(100,200,300))
 ```
 
-#### A function that returns the mean and standard deviation of a set of numbers {-}
+#### A function that returns the mean and standard deviation of a set of numbers {.unnumbered}
 
 ```{r, collapse=T, eval=T}
 mean.and.sd <- function(x=1:10){
@@ -931,7 +938,7 @@ mean.and.sd()       # Uses default argument
 mean.and.sd(hills$climb)
 ```
 
-### Looping -- the `for()` function {-}
+### Looping -- the `for()` function {.unnumbered}
 
 A simple example of a for loop is
 
@@ -953,7 +960,7 @@ print(9/5*celsius+32)
 
 Skilled R users have limited recourse to loops. There are often, as in this and earlier examples, better alternatives.
 
-### Function syntax and semantics {-}
+### Function syntax and semantics {.unnumbered}
 A function is created using an assignment.  On the right hand side, the 
 parameters appear within round brackets.  A default can, optionally, be 
 provided.  In the example above  the default was `x = 1:10`, so that 
@@ -964,7 +971,7 @@ enclosed between curly braces (`{` `}`).  The return value usually appears
 on the final line of the function body.  In the example above, this was 
 the vector consisting of the two named elements `mean` and `sd`.
 
-#### An example of a user function {-}
+#### An example of a user function {.unnumbered}
 The data set `mtcars` in the *datasets* package has data on 63 cars, as given in the 1974 Motor Trend US magazine.
 
 ```{r, eval=F}
@@ -1001,7 +1008,7 @@ cap4 <- paste("Plot of miles per gallon versus horsepower,
 plot.mtcars()
 ```
 
-### Common Useful Functions {-}
+### Common Useful Functions {.unnumbered}
 
 ```{r, eval=F}
 print()   	# Prints a single R object
@@ -1029,14 +1036,14 @@ x[order(x)]
 sort(x)
 ```
 
-#### String Functions {-}
+#### String Functions {.unnumbered}
 ```
 substring(<vector of text strings>, <first position>, <last position>)
 nchar(<vector of text strings>)       
               ## Returns vector of number of characters in each element.
 ```
 
-### The functions `sapply()`, `lapply()`, `apply()`, and `tapply()` {-}
+### The functions `sapply()`, `lapply()`, `apply()`, and `tapply()` {.unnumbered}
 The functions are called as follows:
 
 ```
@@ -1088,7 +1095,7 @@ apply(airquality,2,mean,na.rm=TRUE)
 The use of `apply(airquality,1,mean)` will give means for each row.  
 These are not, for these data, useful information!  
 
-####	*An example that uses `sapply()` with a vector of text strings {-}
+####	*An example that uses `sapply()` with a vector of text strings {.unnumbered}
 We will work with the column `Make` in the dataset `MASS::Cars93`.
 To find the position at which the first space appears in the 
 information on make of car, we might do the following:  
@@ -1099,7 +1106,7 @@ car.brandnames <- sapply(strsplit(as.character(Cars93$Make), " ", fixed=TRUE),
 car.brandnames[1:5]
 ```  
 
-#### Using `aggregate()` and `tapply()` {-}
+#### Using `aggregate()` and `tapply()` {.unnumbered}
 The arguments are in each case a variable, a list of factors, and a function
 that operates on a vector to return a single value.  For each combination of
 factor levels, the function is applied to corresponding values of the variable.  
@@ -1115,7 +1122,7 @@ argument is `INDEX` rather than `by`.  The output is an array with as
 many dimensions as there are factors.  Where there are no data values for 
 a particular combination of factor levels, `NA` is returned.
 
-#### Functions for Confidence Intervals and Tests {-}
+#### Functions for Confidence Intervals and Tests {.unnumbered}
 Two of the simpler functions are
 `t-test` (allows both a one-sample and a two-sample test) and `chisq.test()` 
 for testing for no association between rows and columns in a two way table.
@@ -1124,7 +1131,7 @@ The test is invalid if there is clustering in the data.)
 
 Use the help pages to get more complete information. 
 
-#### Matching and Ordering {-}
+#### Matching and Ordering {.unnumbered}
 
 ```
 match(<vec1>, <vec2>)  ## For each element of <vec1>, returns the 
@@ -1145,7 +1152,7 @@ two4
 x[two4]
 ```  
 
-#### Compare Working Directory Data Sets with a Reference Set {-}
+#### Compare Working Directory Data Sets with a Reference Set {.unnumbered}
 At the beginning of a new session, we might store the names of 
 the objects in the working directory in the vector dsetnames, thus:
 ```{r, eval=F}
@@ -1167,13 +1174,17 @@ additions(dsetnames)
 to get the names of objects that have been added since the start 
 of the session.
 
-#### A Simulation Example {-}
-We would like to know how well such a student might do by random guessing, on a multiple choice test consisting of 15 questions each with five alternatives.  If the choice is truly
-random, with the same probability for all 5 possibilities, we can simulate the correctness 
-of the student for each question by using `sample(1:5, size=1)`, taking `1` as 'correct'
-and any other number as 'wrong'.  For 15 questions we can do `sample(1:5, replace=T, size=15)`,
-and repeat this perhaps 1000 times to get an idea of the distribution of number of
-right answers.  Or we can calculate the distribution as `dbinom(x, size=15, prob=0.2)`,
+#### A Simulation Example {.unnumbered}
+We would like to know how well such a student might do by random
+guessing, on a multiple choice test consisting of 15 questions
+each with five alternatives.  If the choice is truly random, with
+the same probability for all 5 possibilities, we can simulate the
+correctness of the student for each question by using
+`sample(1:5, size=1)`, taking `1` as 'correct' and any other
+number as 'wrong'.  For 15 questions we can do `sample(1:5,
+replace=T, size=15)`, and repeat this perhaps 1000 times to get
+an idea of the distribution of number of right answers.  Or we
+can calculate the distribution as `dbinom(x, size=15, prob=0.2)`,
 with `x` running from 0 to 15.  
 ```{r}
 resp1000 <- matrix(sample(1:5, replace=T, size=15000),nrow=1000)
@@ -1187,7 +1198,7 @@ setNames(round(dbinom(0:15, size=15, prob=0.2), 3), 0:15)[1:11]
 round(pbinom(8, size=15, prob=0.2, lower.tail=F),4)  ## 9 or more
 ```
 
-#### Poisson Random Numbers {-}
+#### Poisson Random Numbers {.unnumbered}
 One can think of the Poisson distribution as the distribution of 
 the total for occurrences of rare events.  For example, an accident 
 at an intersection on any one day should be a rare event.  The 
@@ -1203,7 +1214,7 @@ To simulate the annual number of accidents for a 10-year period,
 we can specify `rpois(10,3.7)`. We pursue the Poisson distribution 
 in an exercise below.  
 
-#### Functions that assist with data management {-}
+#### Functions that assist with data management {.unnumbered}
 Where data, labeling etc must be pulled together from a number
 of sources, and especially where you may want to retrace your
 steps some months later, take the same care over structuring data
@@ -1226,7 +1237,7 @@ some subsequent manipulation, from a number of separate files.
 This structures the code, and makes the function a source of
 documentation for the data.
 
-### Issues for the Writing and Use of Functions {-}
+### Issues for the Writing and Use of Functions {.unnumbered}
 There can be many functions.  Choose their names and
 argument names carefully, so that they are meaningful, even 
 if this means that they are longer than one would like.  
@@ -1293,7 +1304,7 @@ x
 factor(x,exclude=NULL)
 ```
 
-#### Numbers of NAs in subgroups of the data {-}
+#### Numbers of NAs in subgroups of the data {.unnumbered}
 
 The following gives information on the number of NAs in subgroups of the data:
 
@@ -1303,6 +1314,67 @@ table(rainforest$species, !is.na(rainforest$branch))
 ```
 
 Thus for Acacia mabellae the variable `branch` (i.e. number of branches over 2cm in diameter) has 6 `NA`s, out of a total of 16 data values.
+
+## Pipes -- A "do this, then do that" syntax
+
+The following calculates the difference between the largest 
+and the smallest tree height, in the `trees` dataframe 
+(_datasets_ package):
+```{r}
+# Use the relation: y/x = exp(log(y/x) = exp(log(y)-log(x))
+diff(range(trees$Height))
+```
+Using a pipe, this can be written:
+```{r}
+trees$Height |>     # Pipe vector of heights to function `range()`
+  range() |>        # Pipe (min, max) vector to function `diff()`
+  diff()
+```  
+The data object (here, in both cases, a vector) is taken
+as the first argument of the function to which it is piped.
+Notice the ability to add commentary, at each step, that
+describes the operation that is to be performed.
+
+To assign result, use either of the following:
+```{r}
+d <- trees$Height |> range() |> diff()
+trees$Height |> range() |> diff() -> d
+  # Uses right assignment operator
+```
+The assignment is the last operation performed.  It is then 
+in the spirit of the use of pipes to use the right assignment 
+operator (`->`)  to position the assignment last.
+
+The following creates a new data frame where the columns
+hold the logarithms of the values of `Girth`, `Height`, and `Volume`,
+and changes the column names accordingly:
+```{r}
+logtrees <- setNames(log(trees), c("logGirth","logHeight","logVolume"))
+```  
+There are three steps here -- taking the logarithms, and changing
+the names.  What is happening may be clearer if the pipe syntax
+is used to set them out in order:
+```{r}
+trees |> log() |>
+         setNames(c("logGirth","logHeight","logVolume")) -> logtrees
+```
+Notice the specifying of the new names as a second argument,
+following the argument that is piped through from the previous
+line, to the function `setnames()`.
+
+### Pipe to several functions, or to a later argument than the first {.unnumbered}
+
+The trick is to create an anonymous function for which the
+argument concerned is the only argument:
+```{r}
+LakeHuron |>
+    (function(x)c(mean = mean(x), SD = sd(x), n=length(x)))() |>
+  print(digits=3)
+```
+Wrapping round brackets around the function definition 
+causes it to be treated as a function name.
+
+Note that `function(x)` can be abbreviated to `\(x)`.
 
 ## Methods
 R is an object-oriented language.  Objects may have a _class_.
@@ -1324,9 +1396,9 @@ fac<-ordered(1:3)
 class(fac)
 ```
 
-## *Some Further Programming Niceties
+## Some Further Programming Niceties
 
-### *Extracting Arguments to Functions {-}
+### Extracting Arguments to Functions {.unnumbered}
 
 When an argument appears inside a function, it is taken to
 be another name for the object to which the argument refers.
@@ -1346,7 +1418,7 @@ fun2(cars.lm)
 fun3(cars.lm)
 ```
 
-### *Parsing and Evaluation of Expressions {-}
+### Parsing and Evaluation of Expressions {.unnumbered}
 When R encounters an expression such as `mean(x+y)` or `cbind(x,y)`, 
 there are two steps:  
 * The text string is parsed and turned into an expression, i.e. the syntax is checked and it is turned into code that the R computing engine can more immediately evaluate.
@@ -1641,7 +1713,7 @@ Explanation is careful, but often terse.\]
 
  @Wickham-RforData .  R for Data Science.
 
-### References to packages {-}
+### References to packages {.unnumbered}
 
 DAAG:  @R-DAAG
 

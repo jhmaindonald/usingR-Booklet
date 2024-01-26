@@ -23,7 +23,16 @@ demo(graphics)
 ```   
 Press the Enter key to move to each new graph.
 
-## `plot()` and allied functions
+### Plot methods for different classes of object {-}
+The plot function is a generic function that has special methods for “plotting” various different classes of object. For example, plotting a data frame gives, for each numeric variable, a normal probability plot.  Plotting the lm object that is created by the use of the `lm()` linear model function gives diagnostic and other information that is designed to help in the interpretation of regression results.
+Try  
+```{r, eval=F}
+plot(hills)  # Has the same effect as `pairs(hills)`
+```  
+
+
+## `plot()` and allied functions -- some further details
+
 The following both plot `y` against `x`:
 ```{r, eval=F}
 plot(y ~ x)  # Use a formula to specify the graph
@@ -59,125 +68,7 @@ plot(spline(Year, ACT), data=DAAG::austpop, type="l")
   # Fit smooth curve through points
 ```
 
-### Plot methods for other classes of object
-The plot function is a generic function that has special methods for “plotting” various different classes of object. For example, plotting a data frame gives, for each numeric variable, a normal probability plot.  Plotting the lm object that is created by the use of the `lm()` linear model function gives diagnostic and other information that is designed to help in the interpretation of regression results.
-Try  
-```{r, eval=F}
-plot(hills)  # Has the same effect as `pairs(hills)`
-```  
-
-## Fine control – Parameter settings  
-The default settings of parameters, such as character size, are often adequate.
-In order to change parameter settings for a subsequent plot, use the `par()` 
-function.  For example
-```{r, eval=F}
-par(cex=1.25)   # character expansion
-This increases the text and plot symbol size 25% above the default. 
-```
-On the first use of `par()` to make changes for the current device, 
-it is often useful to store existing settings, so that they can be 
-restored later.  For this, specify, e.g.  
-```{r, eval=F}
-oldpar <- par(cex=1.25, mex=1.25)  # mex=1.25 expands the margin by 25%
-```
-This stores the existing settings in oldpar, then changes parameters (here cex and mex) as requested.  To restore the original parameter settings at some later time, enter `par(oldpar)`.  Here is an example:
-```{r, eval=F}
-oldpar <- par(cex=1.5)
-plot(distance ~ stretch, data=elasticband) 
-par(oldpar)         # Restores the earlier settings
-```
-Inside a function one can specify, e.g.  
-```{r, eval=F}
-oldpar <- par(cex=1.25)
-on.exit(par(oldpar))
-```  
-Type in `help(par)` to get details of available parameter settings.
-
-### Multiple plots on the one page
-The parameter `mfrow` can be used to configure the graphics sheet so that subsequent 
-plots appear row by row, one after the other in a rectangular layout, on the one page.  
-For a column by column layout, use `mfcol` instead.  @fig-fig5 uses a 
-two by two layout to show plots of `brain` versus `body` with four different 
-transformations, for data in the `DAAG::MASS::Animals` data frame:  
-
-```{r, echo=F}
-cap5 <- "Plots of `brain` versus `body` for 26 different animals, 
-with four different transformations."
-```
-
-```{r, echo=F, fig.width=8, fig.asp=1.08, fig.show="hold", out.width="100%"}
-#| label: fig-fig5
-#| fig-cap: !expr paste(cap5)
-
-## Code
-par(mfrow=c(2,2))
-with(MASS::Animals, {
-    plot(body, brain)
-    plot(sqrt(body), sqrt(brain))
-    plot(body^0.1, brain^0.1)
-    plot(log(body),log(brain))
-})
-```  
-
-```{r, eval=F}
-#| label: fig-fig5
-```
-
-Note the use of braces (`{`,`}`) to bracket together the four plot
-statements, as a way to ensure that in all four cases the variable
-names refer to columns of the `MASS::Animals` data frame.
-
-### The shape of the graph sheet {-}
-One may for example want the individual plots to be rectangular rather than square.  The R for Windows functions `win.graph()` or `x11()` that set up the Windows screen take the parameters width (in inches), height (in inches) and pointsize (in 1/72 of an inch).  The setting of `pointsize` (default =12) determines character heights.  It is the relative sizes of these parameters that matter for screen display or for incorporation into Word and similar programs.  Graphs can be enlarged or shrunk by pointing at one corner, holding down the left mouse button, and pulling.
-
-## Adding points, lines and text  
-Here is a simple example that uses the function `text()` to add 
-text labels to the points on a plot.  Data are  
-```{r, eval=T}
-primates <- DAAG::primates
-primates
-## Observe that the row names store labels for each row
-```  
-
-```{r, eval=T, echo=F}
-cap6 <- "Plots of the primates data, with labels on points. Panel B improves on Panel A"
-```  
-
-@fig-fig6 (a) would be adequate for identifying points, but is not a 
-presentation quality graph.  @fig-fig6 (b) uses the `xlab` (x-axis) 
-and `ylab` (y-axis) parameters to specify meaningful axis titles. It uses the 
-parameter setting `pos=4` to move the labeling to the right of the points. 
-It sets `pch=16` to make the plot character a heavy black dot.  This helps make 
-the points stand out against the labeling.  
-```{r, eval=T, echo=F, fig.width=8, fig.asp=0.55, out.width="100%"}
-#| label: fig-fig6
-#| fig-cap: !expr paste(cap6)
-
-par(mfrow=c(1,2))
-with(primates, {
-  ## Panel A
-  plot(x=Bodywt, y=Brainwt, xlim=c(0,260))
-  text(x=Bodywt, y=Brainwt, labels=row.names(primates), pos=4)
-  mtext(side=3, adj=0, line=0.5, 'A:')
-  ## Panel B
-  plot(x=Bodywt, y=Brainwt, pch=16, 
-       xlab="Body weight (kg)", ylab="Brain weight (g)", 
-       xlim=c(0,300), ylim=c(0,1350))
-  # Specify xlim to allow room for the rightmost label
-  text(x=Bodywt, y=Brainwt, labels=row.names(primates), pos=4)
-  mtext(side=3, adj=0, line=0.5, 'B:')
-})
-```  
-To place the text to the left of the points, specify  
-```{r, eval=F}
-text(x=Bodywt, y=Brainwt, labels=row.names(primates), pos=2)
-```
-
-Here is the R code for @fig-fig6:  
-```{r fig6, eval=F, echo=T}
-```
-
-### Size, colour, and choice of plotting symbol  
+### Size, colour, and choice of plotting symbol  {-}
 For `plot()` and `points()` the parameter `cex` (“character expansion”) controls the size, while `col` (“colour”) controls the colour of the plotting symbol.  The parameter `pch` controls the choice of plotting symbol.
 The parameters `cex` and `col` may be used in a similar way with `text()`. Try  
 ```{r fig8a, eval=F, echo=T}
@@ -252,12 +143,171 @@ To run the function, enter
 ```{r, fig9, eval=F}
 ```
 
-### Adding Text in one of the margins  
+### Fine control – Parameter settings {-}
+The default settings of parameters, such as character size, are often adequate.
+In order to change parameter settings for a subsequent plot, use the `par()` 
+function.  For example
+```{r, eval=F}
+par(cex=1.25)   # character expansion
+This increases the text and plot symbol size 25% above the default. 
+```
+On the first use of `par()` to make changes for the current device, 
+it is often useful to store existing settings, so that they can be 
+restored later.  For this, specify, e.g.  
+```{r, eval=F}
+oldpar <- par(cex=1.25, mex=1.25)  # mex=1.25 expands the margin by 25%
+```
+This stores the existing settings in oldpar, then changes parameters (here cex and mex) as requested.  To restore the original parameter settings at some later time, enter `par(oldpar)`.  Here is an example:
+```{r, eval=F}
+oldpar <- par(cex=1.5)
+plot(distance ~ stretch, data=elasticband) 
+par(oldpar)         # Restores the earlier settings
+```
+Inside a function one can specify, e.g.  
+```{r, eval=F}
+oldpar <- par(cex=1.25)
+on.exit(par(oldpar))
+```  
+Type in `help(par)` to get details of available parameter settings.
+
+### Multiple plots on the one page {.unnumbered}
+The parameter `mfrow` can be used to configure the graphics sheet so that subsequent 
+plots appear row by row, one after the other in a rectangular layout, on the one page.  
+For a column by column layout, use `mfcol` instead.  @fig-fig5 uses a 
+two by two layout to show plots of `brain` versus `body` with four different 
+transformations, for data in the `DAAG::MASS::Animals` data frame:  
+
+```{r, echo=F}
+cap5 <- "Plots of `brain` versus `body` for 26 different animals, 
+with four different transformations."
+```
+
+```{r, echo=F, fig.width=8, fig.asp=1.08, fig.show="hold", out.width="100%"}
+#| label: fig-fig5
+#| fig-cap: !expr paste(cap5)
+
+## Code
+par(mfrow=c(2,2))
+with(MASS::Animals, {
+    plot(body, brain)
+    plot(sqrt(body), sqrt(brain))
+    plot(body^0.1, brain^0.1)
+    plot(log(body),log(brain))
+})
+```  
+
+```{r, eval=F}
+#| label: fig-fig5
+```
+
+Note the use of braces (`{`,`}`) to bracket together the four plot
+statements, as a way to ensure that in all four cases the variable
+names refer to columns of the `MASS::Animals` data frame.
+
+### The shape of the graph sheet {-}
+One may for example want the individual plots to be rectangular rather than square.  The R for Windows functions `win.graph()` or `x11()` that set up the Windows screen take the parameters width (in inches), height (in inches) and pointsize (in 1/72 of an inch).  The setting of `pointsize` (default =12) determines character heights.  It is the relative sizes of these parameters that matter for screen display or for incorporation into Word and similar programs.  Graphs can be enlarged or shrunk by pointing at one corner, holding down the left mouse button, and pulling.
+
+## Adding points, lines, and text
+
+Use the function `points()` to add points. Use `lines()` to join
+successive lines to points.
+
+### Adding a specified line to plots {-}
+Use the function `abline()` for this.  The parameters may be an intercept and slope, or a vector that holds the intercept and slope, or an lm object.  Alternatively it is possible to draw a horizontal line (`h` = <height>), or a vertical line (`v` = <ordinate>).
+
+```{r echo=F}
+cap14 <- "Plots of brain weight (gm) against body weight (kg).  
+Panel A makes it clear why a logarithmic
+or other power transformation is needed.  Panel B adds both a least
+squares regression line and a robust regression line."
+```  
+
+```{r, echo=F, fig.width=8, fig.asp=0.55}
+#| label: fig-fig14
+#| fig-cap: !expr paste(cap14)
+
+par(mfrow=c(1,2))
+Animals <- MASS::Animals
+plot(brain ~ body, data=Animals)
+plot(brain ~ body, data=Animals, log="xy")
+Animals.lm <- lm(log10(brain) ~ log10(body), data=Animals)
+abline(Animals.lm)
+Animals.rlm <- MASS::rlm(log10(brain) ~ log10(body), data=Animals)
+abline(Animals.rlm, col=2)
+```  
+@fig-fig14 shows plots of brain weight (gm) against body 
+weight (kg), for 28 species of land animals.  Logarithmic scales 
+on both axes result in a meaningful plot, shown in Panel B.  Two 
+lines have been added -- a least squares regression line (in black), 
+and a robust regression line (in red).
+  
+  The robust regression line makes a more sense than the least 
+  squares line. There are a number of animals with large body 
+  weight that have a larger brain weight than the red line would 
+  suggest.
+  
+  Code for Panel B is:  
+```{r, eval=F, echo=-c(1,3)}
+plot(brain ~ body, data=Animals, log="xy")
+Animals.lm <- lm(log10(brain) ~ log10(body), data=Animals)
+abline(Animals.lm)
+Animals.rlm <- MASS::rlm(log10(brain) ~ log10(body), data=Animals)
+abline(Animals.rlm, col=2)
+```
+
+### Adding text {-}
+
+Here is a simple example that uses the function `text()` to add 
+text labels to the points on a plot.  Data are  
+```{r, eval=T}
+primates <- DAAG::primates
+primates
+## Observe that the row names store labels for each row
+```  
+
+```{r, eval=T, echo=F}
+cap6 <- "Plots of the primates data, with labels on points. Panel B improves on Panel A"
+```  
+
+@fig-fig6 (a) would be adequate for identifying points, but is not a 
+presentation quality graph.  @fig-fig6 (b) uses the `xlab` (x-axis) 
+and `ylab` (y-axis) parameters to specify meaningful axis titles. It uses the 
+parameter setting `pos=4` to move the labeling to the right of the points. 
+It sets `pch=16` to make the plot character a heavy black dot.  This helps make the points stand out against the labeling.  
+```{r, eval=T, echo=F, fig.width=8, fig.asp=0.55, out.width="100%"}
+#| label: fig-fig6
+#| fig-cap: !expr paste(cap6)
+
+par(mfrow=c(1,2))
+with(primates, {
+  ## Panel A
+  plot(x=Bodywt, y=Brainwt, xlim=c(0,260))
+  text(x=Bodywt, y=Brainwt, labels=row.names(primates), pos=4)
+  mtext(side=3, adj=0, line=0.5, 'A:')
+  ## Panel B
+  plot(x=Bodywt, y=Brainwt, pch=16, 
+       xlab="Body weight (kg)", ylab="Brain weight (g)", 
+       xlim=c(0,300), ylim=c(0,1350))
+  # Specify xlim to allow room for the rightmost label
+  text(x=Bodywt, y=Brainwt, labels=row.names(primates), pos=4)
+  mtext(side=3, adj=0, line=0.5, 'B:')
+})
+```  
+To place the text to the left of the points, specify  
+```{r, eval=F}
+text(x=Bodywt, y=Brainwt, labels=row.names(primates), pos=2)
+```
+
+Here is the R code for @fig-fig6:  
+```{r fig6, eval=F, echo=T}
+```
+
+### Adding Text in one of the margins {-}
 
 Use `mtext(side, line, text, ..)` to add text in a margin (`side`)
 of the current plot.  The sides are numbered 1(x-axis), 2(y-axis), 3(top) and 4(right).
 
-## Identification and Location on the Figure Region  
+### Identification and Location on the Figure Region {-}
 
 The functions `identify()` and `locator()` can be used for this purpose.
 Draw the graph first, then call one or other of these functions.
@@ -285,7 +335,7 @@ The function can be used to mark new points (specify `type="p"`) or lines
 ## Plots that show the distribution of data values
 We discuss histograms, density plots, boxplots and normal probability plots.
 
-### Histograms and density plots
+### Histograms and density plots {-}
 The shapes of histograms depend on the placement of the breaks, as @fig-fig10 illustrates:
 
 ```{r, eval=T, echo=F}
@@ -352,7 +402,22 @@ with(possum, {
 })
 ```
 
-### Boxplots
+### Dotcharts and stripcharts {-}
+These can be a good alternative to barcharts.  They have a much higher 
+information to ink ratio!  Try  
+```{r, eval=F}
+dotchart(islands)  # vector of named numeric values, in the datasets package
+```   
+Unfortunately there are many names, and there is substantial overlap. 
+Either enlarge the graph to occupy a large display screen, or plot with 
+perhaps `cex=0.5`, so that the names can be distinguished.
+
+Note also stripcharts, obtained using `stripchart()`. Try, e.g.:
+```{r, eval=F}
+stripchart(decrease ~ treatment, log = "x", data = OrchardSprays)
+```
+
+### Boxplots {-}
 @fig-fig11 shows a boxplot of the female possum lengths:
 
 ```{r, echo=F, eval=T}
@@ -430,7 +495,7 @@ rug(totlngth, side=1)   # Add a 'rug' that shows the location of points
 @fig-fig11 adds interpretative information.
 Also a 'rug', showing the location of individual data points, has been added.
 
-### Normal probability plots
+### Normal probability plots {-}
 
 Type `qqnorm(y)` to obtain a normal probability plot of the elements of `y`.  
 The points of a normal probability plot will on average lie on a straight 
@@ -441,11 +506,7 @@ from a normal distribution.  Look ahead to @fig-fig19, which uses the
 _lattice_ function `qqmath()`, with a much more effective graph than is
 readily obtained using base graphics functions.
 
-
-## Other Useful Plotting Functions
-For the functions demonstrated here, we use data on the heights of 100 female athletes.
-
-### Scatterplot smoothing
+## Scatterplot smoothing
 The function `panel.smooth()` plots points, then adds a smooth curve through 
 the points.  As an example, consider the `MASS:forbes` data frame that
 has 17 observations of barometric pressure (`bp`, inches of mercury) and
@@ -470,59 +531,6 @@ abline(forbes.lm, lty=2, col=adjustcolor('red', alpha.f=0.5))  # Add line
 The parameter `span`, specifying the proportion of points that influence
 the smoothed value at each point, can be used to control the smoothness.
 The default is $\frac{2}{3}$.
-
-### Adding lines to plots
-Use the function `abline()` for this.  The parameters may be an intercept and slope, or a vector that holds the intercept and slope, or an lm object.  Alternatively it is possible to draw a horizontal line (`h` = <height>), or a vertical line (`v` = <ordinate>).
-
-```{r echo=F}
-cap14 <- "Plots of brain weight (gm) against body weight (kg).  
-Panel A makes it clear why a logarithmic
-or other power transformation is needed.  Panel B adds both a least
-squares regression line and a robust regression line."
-```  
-
-```{r, echo=F, fig.width=8, fig.asp=0.55}
-#| label: fig-fig14
-#| fig-cap: !expr paste(cap14)
-
-par(mfrow=c(1,2))
-Animals <- MASS::Animals
-plot(brain ~ body, data=Animals)
-plot(brain ~ body, data=Animals, log="xy")
-Animals.lm <- lm(log10(brain) ~ log10(body), data=Animals)
-abline(Animals.lm)
-Animals.rlm <- MASS::rlm(log10(brain) ~ log10(body), data=Animals)
-abline(Animals.rlm, col=2)
-```  
-@fig-fig14 shows plots of brain weight (gm) against body 
-weight (kg), for 28 species of land animals.  Logarithmic scales 
-on both axes result in a meaningful plot, shown in Panel B.  Two 
-lines have been added -- a least squares regression line (in black), 
-and a robust regression line (in red).
-  
-  The robust regression line makes a more sense than the least 
-  squares line. There are a number of animals with large body 
-  weight that have a larger brain weight than the red line would 
-  suggest.
-  
-  Code for Panel B is:  
-```{r, eval=F, echo=-c(1,3)}
-plot(brain ~ body, data=Animals, log="xy")
-Animals.lm <- lm(log10(brain) ~ log10(body), data=Animals)
-abline(Animals.lm)
-Animals.rlm <- MASS::rlm(log10(brain) ~ log10(body), data=Animals)
-abline(Animals.rlm, col=2)
-```
-
-### Dotcharts
-These can be a good alternative to barcharts.  They have a much higher 
-information to ink ratio!  Try  
-```{r, eval=F}
-dotchart(islands)  # vector of named numeric values, in the datasets package
-```   
-Unfortunately there are many names, and there is substantial overlap. 
-Either enlarge the graph to occupy a large display screen, or plot with 
-perhaps `cex=0.5`, so that the names can be distinguished.
 
 ## Lattice graphics {#sec-lattice}
 Lattice plots allow the use of the layout on the page to reflect meaningful 

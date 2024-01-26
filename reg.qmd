@@ -114,7 +114,7 @@ $$
 where $e$ is a random variable with mean 0.  The `X` matrix then consists 
 of a single column, holding the values of `x`.
 
-### Model formulae more generally
+### Model formulae more generally {-}
 
 Model formulae take forms such as:
 ```
@@ -132,7 +132,8 @@ gives a plot of `y` against `x` for each different combination of levels of
 y ~ x | fac1+fac2
 ```
 
-### *Manipulating Model Formulae
+### Manipulating Model Formulae {-}
+
 Model formulae can be assigned, e.g.  
 ```
 formyxz <- formula(y~x+z)
@@ -157,11 +158,11 @@ lm(formds, data=elasticband)
 Note that graphics formulae can be manipulated in exactly 
 the same way as model formulae.
 
-## Multiple Linear Regression Models
+## Multiple Linear Regression -- Examples
 
-### The data frame Rubber
+### The data frame Rubber {-}
 
-The data set `MASS::Rubber` is from the accelerated testing of tyre 
+The dataset `MASS::Rubber` is from the accelerated testing of tyre 
 rubber. The variables are `loss` (the abrasion loss in gm/hr),  `hard` 
 (hardness in 'Shore’ units), and `tens` (tensile strength in kg/sq m).^[The 
 original source is @davies1947statistical , Table 6.1, p. 119.]
@@ -348,7 +349,7 @@ Code is:
 #| label: fig-fig27
 ```
 
-### Spline Terms in Linear Models
+### Spline Terms in Linear Models {-}
 
 The fitting of polynomial functions was a simple example of the
 use of linear models to fit terms that may be nonlinear functions
@@ -465,11 +466,12 @@ model.matrix(kWh ~ insulation)
 ```   
 and check that it gives the above model matrix.
 
-### Other Choices of Contrasts
-There are other ways to set up the X matrix that use other 
-choices of contrasts.  One obvious alternative is to make 
-without the first factor level, so that it becomes the baseline. 
-For this, specify:  
+### Alternative Choices of Contrasts {-}
+The X matrix can take different forms, depending on the
+choice of contrasts.  One obvious alternative to that shown is 
+One obvious alternative in the present example is to make 
+`without` the first factor level, so that it becomes the baseline
+or reference level. For this, specify:  
 ```{r}
 insulation <- relevel(insulation, ref="without")      
   # Make `without’ the baseline
@@ -588,7 +590,8 @@ By default, R uses the treatment contrasts for factors, i.e. the first level
 is taken as the baseline or reference level.  A useful function is `relevel()`,
 using the parameter `ref` to set the level that is wanted as the reference level.
 
-### Plant Growth Example  
+### Plant Growth Example  {-}
+
 @fig-fig29 shows boxplot comparisons of plant weight.
 
 ```{r, echo=F}
