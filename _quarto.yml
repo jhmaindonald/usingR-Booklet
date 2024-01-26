@@ -1,6 +1,6 @@
 project:
   type: book
-
+  output-dir: docs
 book:
   title: "Using R for Data Analysis and Graphics"
     
